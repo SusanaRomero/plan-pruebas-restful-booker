@@ -1,0 +1,31 @@
+# PROC-05 · Regresión automatizada (TC-19 a TC-23) ejecutada por GitHub Actions.
+# Se ejecuta en cada push a main, en cada pull request y a mano desde la pestaña "Actions".
+# El reporte HTML queda como artefacto descargable (evidencia de ejecución).
+name: Pruebas automatizadas (PROC-05)
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  playwright:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Instalar dependencias
+        run: npm install
+      - name: Ejecutar TC-19 a TC-23 contra la API pública
+        run: npx playwright test
+      - name: Guardar reporte HTML como evidencia
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reporte-playwright-${{ github.run_number }}
+          path: playwright-report/
+          retention-days: 30
