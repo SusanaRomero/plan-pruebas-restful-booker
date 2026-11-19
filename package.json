@@ -1,0 +1,16 @@
+{
+  "name": "plan-pruebas-restful-booker",
+  "version": "1.0.0",
+  "description": "Plan de pruebas ISO/IEC/IEEE 29119-3 con enfoque RBT para la API RESTful Booker (módulo de reservas)",
+  "private": true,
+  "scripts": {
+    "test": "playwright test",
+    "test:reporte": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
