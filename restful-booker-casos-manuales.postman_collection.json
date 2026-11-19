@@ -1,0 +1,1683 @@
+{
+  "info": {
+    "name": "RESTful Booker · Casos manuales PP-RB-2026-001",
+    "description": "Casos manuales TC-01 a TC-18 del plan de pruebas PP-RB-2026-001. Los scripts solo capturan variables: el resultado se compara a mano con el resultado esperado del plan (docs/plan-de-pruebas.md). Ejecutar cada carpeta completa en menos de 10 minutos (R07).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "PROC-01 · Fechas y precio (P1)",
+      "item": [
+        {
+          "name": "00 Preparación · GET /ping y sufijo único",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ping",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ping"
+              ]
+            },
+            "description": "Debe responder 201. Genera {{sufijo}} único para este procedimiento (mitiga R16)."
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.collectionVariables.set('sufijo', Date.now().toString());",
+                  "pm.collectionVariables.set('creados', '[]');"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-02 · POST /booking",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/booking",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "booking"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstname\": \"Ana\",\n  \"lastname\": \"Prueba-{{sufijo}}-TC02\",\n  \"totalprice\": 150,\n  \"depositpaid\": true,\n  \"bookingdates\": {\n    \"checkin\": \"2026-12-10\",\n    \"checkout\": \"2026-12-11\"\n  },\n  \"additionalneeds\": \"Breakfast\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "BVA +1 noche. Esperado: 200 con bookingid y los mismos datos."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Solo captura datos para el cierre; el resultado se evalúa manualmente contra el plan.",
+                  "let j = {}; try { j = pm.response.json(); } catch (e) {}",
+                  "if (j.bookingid) {",
+                  "  const c = JSON.parse(pm.collectionVariables.get('creados') || '[]');",
+                  "  c.push(j.bookingid); pm.collectionVariables.set('creados', JSON.stringify(c));",
+                  "  pm.collectionVariables.set('id_TC02', j.bookingid);",
+                  "  console.log('ATENCIÓN: la API creó la reserva', j.bookingid);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-02 · Verificación GET /booking/{{id_TC02}}",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/booking/{{id_TC02}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "booking",
+                "{{id_TC02}}"
+              ]
+            },
+            "description": "Esperado: 200 con los mismos datos enviados."
+          }
+        },
+        {
+          "name": "TC-09 · POST /booking",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/booking",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "booking"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstname\": \"Ana\",\n  \"lastname\": \"Prueba-{{sufijo}}-TC09\",\n  \"totalprice\": 0,\n  \"depositpaid\": true,\n  \"bookingdates\": {\n    \"checkin\": \"2026-12-10\",\n    \"checkout\": \"2026-12-11\"\n  },\n  \"additionalneeds\": \"Breakfast\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "BVA precio 0. Esperado: 200 con bookingid y totalprice 0."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Solo captura datos para el cierre; el resultado se evalúa manualmente contra el plan.",
+                  "let j = {}; try { j = pm.response.json(); } catch (e) {}",
+                  "if (j.bookingid) {",
+                  "  const c = JSON.parse(pm.collectionVariables.get('creados') || '[]');",
+                  "  c.push(j.bookingid); pm.collectionVariables.set('creados', JSON.stringify(c));",
+                  "  pm.collectionVariables.set('id_TC09', j.bookingid);",
+                  "  console.log('ATENCIÓN: la API creó la reserva', j.bookingid);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-09 · Verificación GET /booking/{{id_TC09}}",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/booking/{{id_TC09}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "booking",
+                "{{id_TC09}}"
+              ]
+            },
+            "description": "Esperado: 200 con los mismos datos enviados."
+          }
+        },
+        {
+          "name": "TC-01 · POST /booking",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/booking",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "booking"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstname\": \"Ana\",\n  \"lastname\": \"Prueba-{{sufijo}}-TC01\",\n  \"totalprice\": 150,\n  \"depositpaid\": true,\n  \"bookingdates\": {\n    \"checkin\": \"2026-12-10\",\n    \"checkout\": \"2026-12-09\"\n  },\n  \"additionalneeds\": \"Breakfast\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "BVA −1 noche. Esperado: rechazo 400 y sin bookingid."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Solo captura datos para el cierre; el resultado se evalúa manualmente contra el plan.",
+                  "let j = {}; try { j = pm.response.json(); } catch (e) {}",
+                  "if (j.bookingid) {",
+                  "  const c = JSON.parse(pm.collectionVariables.get('creados') || '[]');",
+                  "  c.push(j.bookingid); pm.collectionVariables.set('creados', JSON.stringify(c));",
+                  "  pm.collectionVariables.set('id_TC01', j.bookingid);",
+                  "  console.log('ATENCIÓN: la API creó la reserva', j.bookingid);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-01 · Verificación por apellido",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/booking?firstname=Ana&lastname=Prueba-{{sufijo}}-TC01",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "booking"
+              ],
+              "query": [
+                {
+                  "key": "firstname",
+                  "value": "Ana"
+                },
+                {
+                  "key": "lastname",
+                  "value": "Prueba-{{sufijo}}-TC01"
+                }
+              ]
+            },
+            "description": "Esperado: [] (la reserva no existe)."
+          }
+        },
+        {
+          "name": "TC-07 · POST /booking",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/booking",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "booking"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstname\": \"Ana\",\n  \"lastname\": \"Prueba-{{sufijo}}-TC07\",\n  \"totalprice\": 150,\n  \"depositpaid\": true,\n  \"bookingdates\": {\n    \"checkin\": \"2026-12-10\",\n    \"checkout\": \"2026-12-10\"\n  },\n  \"additionalneeds\": \"Breakfast\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "BVA 0 noches. Esperado: rechazo 400 y sin bookingid."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Solo captura datos para el cierre; el resultado se evalúa manualmente contra el plan.",
+                  "let j = {}; try { j = pm.response.json(); } catch (e) {}",
+                  "if (j.bookingid) {",
+                  "  const c = JSON.parse(pm.collectionVariables.get('creados') || '[]');",
+                  "  c.push(j.bookingid); pm.collectionVariables.set('creados', JSON.stringify(c));",
+                  "  pm.collectionVariables.set('id_TC07', j.bookingid);",
+                  "  console.log('ATENCIÓN: la API creó la reserva', j.bookingid);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-07 · Verificación por apellido",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/booking?firstname=Ana&lastname=Prueba-{{sufijo}}-TC07",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "booking"
+              ],
+              "query": [
+                {
+                  "key": "firstname",
+                  "value": "Ana"
+                },
+                {
+                  "key": "lastname",
+                  "value": "Prueba-{{sufijo}}-TC07"
+                }
+              ]
+            },
+            "description": "Esperado: [] (la reserva no existe)."
+          }
+        },
+        {
+          "name": "TC-08 · POST /booking",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/booking",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "booking"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstname\": \"Ana\",\n  \"lastname\": \"Prueba-{{sufijo}}-TC08\",\n  \"totalprice\": -1,\n  \"depositpaid\": true,\n  \"bookingdates\": {\n    \"checkin\": \"2026-12-10\",\n    \"checkout\": \"2026-12-11\"\n  },\n  \"additionalneeds\": \"Breakfast\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "BVA precio −1. Esperado: rechazo 400 y sin bookingid."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Solo captura datos para el cierre; el resultado se evalúa manualmente contra el plan.",
+                  "let j = {}; try { j = pm.response.json(); } catch (e) {}",
+                  "if (j.bookingid) {",
+                  "  const c = JSON.parse(pm.collectionVariables.get('creados') || '[]');",
+                  "  c.push(j.bookingid); pm.collectionVariables.set('creados', JSON.stringify(c));",
+                  "  pm.collectionVariables.set('id_TC08', j.bookingid);",
+                  "  console.log('ATENCIÓN: la API creó la reserva', j.bookingid);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-08 · Verificación por apellido",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/booking?firstname=Ana&lastname=Prueba-{{sufijo}}-TC08",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "booking"
+              ],
+              "query": [
+                {
+                  "key": "firstname",
+                  "value": "Ana"
+                },
+                {
+                  "key": "lastname",
+                  "value": "Prueba-{{sufijo}}-TC08"
+                }
+              ]
+            },
+            "description": "Esperado: [] (la reserva no existe)."
+          }
+        },
+        {
+          "name": "TC-10 · POST /booking",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/booking",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "booking"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstname\": \"Ana\",\n  \"lastname\": \"Prueba-{{sufijo}}-TC10\",\n  \"totalprice\": \"cien\",\n  \"depositpaid\": true,\n  \"bookingdates\": {\n    \"checkin\": \"2026-12-10\",\n    \"checkout\": \"2026-12-11\"\n  },\n  \"additionalneeds\": \"Breakfast\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "EP precio no numérico. Esperado: rechazo 400 y sin bookingid."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Solo captura datos para el cierre; el resultado se evalúa manualmente contra el plan.",
+                  "let j = {}; try { j = pm.response.json(); } catch (e) {}",
+                  "if (j.bookingid) {",
+                  "  const c = JSON.parse(pm.collectionVariables.get('creados') || '[]');",
+                  "  c.push(j.bookingid); pm.collectionVariables.set('creados', JSON.stringify(c));",
+                  "  pm.collectionVariables.set('id_TC10', j.bookingid);",
+                  "  console.log('ATENCIÓN: la API creó la reserva', j.bookingid);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-10 · Verificación por apellido",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/booking?firstname=Ana&lastname=Prueba-{{sufijo}}-TC10",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "booking"
+              ],
+              "query": [
+                {
+                  "key": "firstname",
+                  "value": "Ana"
+                },
+                {
+                  "key": "lastname",
+                  "value": "Prueba-{{sufijo}}-TC10"
+                }
+              ]
+            },
+            "description": "Esperado: [] (la reserva no existe)."
+          }
+        },
+        {
+          "name": "99 Cierre · Eliminar reservas creadas",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ping",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ping"
+              ]
+            },
+            "description": "Elimina con token todas las reservas que se crearon en el procedimiento (incluidas las que la API aceptó por error). Revisar la consola de Postman: lista los IDs eliminados para anotarlos en el resultado real."
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const base = pm.collectionVariables.get('baseUrl');",
+                  "pm.sendRequest({ url: base + '/auth', method: 'POST', header: {'Content-Type': 'application/json'},",
+                  "  body: { mode: 'raw', raw: JSON.stringify({ username: 'admin', password: 'password123' }) } }, (e, r) => {",
+                  "  const token = r.json().token;",
+                  "  JSON.parse(pm.collectionVariables.get('creados') || '[]').forEach(id => {",
+                  "    pm.sendRequest({ url: base + '/booking/' + id, method: 'DELETE', header: { Cookie: 'token=' + token } },",
+                  "      (e2, r2) => console.log('DELETE /booking/' + id + ' -> ' + r2.code));",
+                  "  });",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "PROC-02 · Estructura y formato (P1)",
+      "item": [
+        {
+          "name": "00 Preparación · GET /ping y sufijo único",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ping",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ping"
+              ]
+            },
+            "description": "Debe responder 201. Genera {{sufijo}} único para este procedimiento (mitiga R16)."
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.collectionVariables.set('sufijo', Date.now().toString());",
+                  "pm.collectionVariables.set('creados', '[]');"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-11 · POST /booking sin lastname",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/booking",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "booking"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstname\": \"Ana-{{sufijo}}-TC11\",\n  \"totalprice\": 150,\n  \"depositpaid\": true,\n  \"bookingdates\": {\n    \"checkin\": \"2026-12-10\",\n    \"checkout\": \"2026-12-11\"\n  },\n  \"additionalneeds\": \"Breakfast\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "EP campo obligatorio ausente. Esperado: 400 (un 500 → incidente R10) y sin bookingid."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Solo captura datos para el cierre; el resultado se evalúa manualmente contra el plan.",
+                  "let j = {}; try { j = pm.response.json(); } catch (e) {}",
+                  "if (j.bookingid) {",
+                  "  const c = JSON.parse(pm.collectionVariables.get('creados') || '[]');",
+                  "  c.push(j.bookingid); pm.collectionVariables.set('creados', JSON.stringify(c));",
+                  "  pm.collectionVariables.set('id_TC11', j.bookingid);",
+                  "  console.log('ATENCIÓN: la API creó la reserva', j.bookingid);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-11 · Verificación por nombre",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/booking?firstname=Ana-{{sufijo}}-TC11",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "booking"
+              ],
+              "query": [
+                {
+                  "key": "firstname",
+                  "value": "Ana-{{sufijo}}-TC11"
+                }
+              ]
+            },
+            "description": "Esperado: []."
+          }
+        },
+        {
+          "name": "TC-12 · POST /booking con Content-Type text/plain",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "text/plain"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/booking",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "booking"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"firstname\": \"Ana\", \"lastname\": \"Prueba-{{sufijo}}-TC12\", \"totalprice\": 150, \"depositpaid\": true, \"bookingdates\": {\"checkin\": \"2026-12-10\", \"checkout\": \"2026-12-11\"}, \"additionalneeds\": \"Breakfast\"}"
+            },
+            "description": "EP Content-Type no JSON. Esperado: 4xx (415 o 400) y sin bookingid."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Solo captura datos para el cierre; el resultado se evalúa manualmente contra el plan.",
+                  "let j = {}; try { j = pm.response.json(); } catch (e) {}",
+                  "if (j.bookingid) {",
+                  "  const c = JSON.parse(pm.collectionVariables.get('creados') || '[]');",
+                  "  c.push(j.bookingid); pm.collectionVariables.set('creados', JSON.stringify(c));",
+                  "  pm.collectionVariables.set('id_TC12', j.bookingid);",
+                  "  console.log('ATENCIÓN: la API creó la reserva', j.bookingid);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-12 · Verificación por apellido",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/booking?firstname=Ana&lastname=Prueba-{{sufijo}}-TC12",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "booking"
+              ],
+              "query": [
+                {
+                  "key": "firstname",
+                  "value": "Ana"
+                },
+                {
+                  "key": "lastname",
+                  "value": "Prueba-{{sufijo}}-TC12"
+                }
+              ]
+            },
+            "description": "Esperado: []."
+          }
+        },
+        {
+          "name": "TC-13 · POST /booking con fecha 2026-02-30",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/booking",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "booking"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstname\": \"Ana\",\n  \"lastname\": \"Prueba-{{sufijo}}-TC13\",\n  \"totalprice\": 150,\n  \"depositpaid\": true,\n  \"bookingdates\": {\n    \"checkin\": \"2026-02-30\",\n    \"checkout\": \"2026-03-05\"\n  },\n  \"additionalneeds\": \"Breakfast\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "EP fecha inexistente. Esperado: 400 y sin bookingid. Si la acepta, anotar qué fecha guardó."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Solo captura datos para el cierre; el resultado se evalúa manualmente contra el plan.",
+                  "let j = {}; try { j = pm.response.json(); } catch (e) {}",
+                  "if (j.bookingid) {",
+                  "  const c = JSON.parse(pm.collectionVariables.get('creados') || '[]');",
+                  "  c.push(j.bookingid); pm.collectionVariables.set('creados', JSON.stringify(c));",
+                  "  pm.collectionVariables.set('id_TC13', j.bookingid);",
+                  "  console.log('ATENCIÓN: la API creó la reserva', j.bookingid);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-13 · Verificación por apellido",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/booking?firstname=Ana&lastname=Prueba-{{sufijo}}-TC13",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "booking"
+              ],
+              "query": [
+                {
+                  "key": "firstname",
+                  "value": "Ana"
+                },
+                {
+                  "key": "lastname",
+                  "value": "Prueba-{{sufijo}}-TC13"
+                }
+              ]
+            },
+            "description": "Esperado: []."
+          }
+        },
+        {
+          "name": "99 Cierre · Eliminar reservas creadas",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ping",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ping"
+              ]
+            },
+            "description": "Elimina con token todas las reservas que se crearon en el procedimiento (incluidas las que la API aceptó por error). Revisar la consola de Postman: lista los IDs eliminados para anotarlos en el resultado real."
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const base = pm.collectionVariables.get('baseUrl');",
+                  "pm.sendRequest({ url: base + '/auth', method: 'POST', header: {'Content-Type': 'application/json'},",
+                  "  body: { mode: 'raw', raw: JSON.stringify({ username: 'admin', password: 'password123' }) } }, (e, r) => {",
+                  "  const token = r.json().token;",
+                  "  JSON.parse(pm.collectionVariables.get('creados') || '[]').forEach(id => {",
+                  "    pm.sendRequest({ url: base + '/booking/' + id, method: 'DELETE', header: { Cookie: 'token=' + token } },",
+                  "      (e2, r2) => console.log('DELETE /booking/' + id + ' -> ' + r2.code));",
+                  "  });",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "PROC-03 · Modificación y autorización (P1)",
+      "item": [
+        {
+          "name": "00 Preparación · GET /ping y sufijo único",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ping",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ping"
+              ]
+            },
+            "description": "Debe responder 201. Genera {{sufijo}} único para este procedimiento (mitiga R16)."
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.collectionVariables.set('sufijo', Date.now().toString());",
+                  "pm.collectionVariables.set('creados', '[]');"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "00 Preparación · POST /auth (token)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"password123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Credenciales de prueba DAT-02. Guarda {{token}}."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const j = pm.response.json(); pm.collectionVariables.set('token', j.token || '');"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "00 Preparación · Crear reserva base (DAT-01)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/booking",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "booking"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstname\": \"Ana\",\n  \"lastname\": \"Prueba-{{sufijo}}\",\n  \"totalprice\": 150,\n  \"depositpaid\": true,\n  \"bookingdates\": {\n    \"checkin\": \"2026-12-10\",\n    \"checkout\": \"2026-12-11\"\n  },\n  \"additionalneeds\": \"Breakfast\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Crea la reserva base y guarda {{bookingid}}."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const j = pm.response.json(); pm.collectionVariables.set('bookingid', j.bookingid);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-18 · POST /auth con contraseña incorrecta",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"clave-incorrecta\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "EP credencial inválida. Esperado: sin propiedad token (401 según RFC 9110)."
+          }
+        },
+        {
+          "name": "TC-03 · PUT con token y cuerpo completo",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Cookie",
+                "value": "token={{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/booking/{{bookingid}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "booking",
+                "{{bookingid}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstname\": \"Ana\",\n  \"lastname\": \"Prueba-{{sufijo}}\",\n  \"totalprice\": 180,\n  \"depositpaid\": false,\n  \"bookingdates\": {\n    \"checkin\": \"2026-12-10\",\n    \"checkout\": \"2026-12-11\"\n  },\n  \"additionalneeds\": \"Breakfast\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "EP clases válidas. Esperado: 200 con totalprice 180 y depositpaid false."
+          }
+        },
+        {
+          "name": "TC-03 · Verificación GET /booking/{{bookingid}}",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/booking/{{bookingid}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "booking",
+                "{{bookingid}}"
+              ]
+            },
+            "description": "Esperado: totalprice 180, depositpaid false; demás campos sin cambio."
+          }
+        },
+        {
+          "name": "TC-14 · PUT con token y cuerpo sin bookingdates",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Cookie",
+                "value": "token={{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/booking/{{bookingid}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "booking",
+                "{{bookingid}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstname\": \"Ana\",\n  \"lastname\": \"Prueba-{{sufijo}}\",\n  \"totalprice\": 180,\n  \"depositpaid\": false,\n  \"additionalneeds\": \"Breakfast\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "EP cuerpo incompleto. Esperado: 400."
+          }
+        },
+        {
+          "name": "TC-14 · Verificación GET /booking/{{bookingid}}",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/booking/{{bookingid}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "booking",
+                "{{bookingid}}"
+              ]
+            },
+            "description": "Esperado: idéntico al resultado de TC-03."
+          }
+        },
+        {
+          "name": "TC-15 · PUT sin autorización",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/booking/{{bookingid}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "booking",
+                "{{bookingid}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstname\": \"Ana\",\n  \"lastname\": \"Prueba-{{sufijo}}\",\n  \"totalprice\": 999,\n  \"depositpaid\": true,\n  \"bookingdates\": {\n    \"checkin\": \"2026-12-10\",\n    \"checkout\": \"2026-12-11\"\n  },\n  \"additionalneeds\": \"Breakfast\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "EP sin autorización. Esperado: 403."
+          }
+        },
+        {
+          "name": "TC-15 · Verificación GET /booking/{{bookingid}}",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/booking/{{bookingid}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "booking",
+                "{{bookingid}}"
+              ]
+            },
+            "description": "Esperado: totalprice distinto de 999."
+          }
+        },
+        {
+          "name": "TC-16 · PUT con token inventado",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Cookie",
+                "value": "token=abc123invalido"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/booking/{{bookingid}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "booking",
+                "{{bookingid}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstname\": \"Ana\",\n  \"lastname\": \"Prueba-{{sufijo}}\",\n  \"totalprice\": 999,\n  \"depositpaid\": true,\n  \"bookingdates\": {\n    \"checkin\": \"2026-12-10\",\n    \"checkout\": \"2026-12-11\"\n  },\n  \"additionalneeds\": \"Breakfast\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "EP Cookie con token no emitido. Esperado: 403."
+          }
+        },
+        {
+          "name": "TC-16 · Verificación GET /booking/{{bookingid}}",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/booking/{{bookingid}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "booking",
+                "{{bookingid}}"
+              ]
+            },
+            "description": "Esperado: totalprice distinto de 999."
+          }
+        },
+        {
+          "name": "99 Cierre · DELETE /booking/{{bookingid}}",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Cookie",
+                "value": "token={{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/booking/{{bookingid}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "booking",
+                "{{bookingid}}"
+              ]
+            },
+            "description": "Esperado: 201."
+          }
+        },
+        {
+          "name": "99 Cierre · Verificar eliminación",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/booking/{{bookingid}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "booking",
+                "{{bookingid}}"
+              ]
+            },
+            "description": "Esperado: 404."
+          }
+        }
+      ]
+    },
+    {
+      "name": "PROC-04 · Consulta y modificación parcial (P2)",
+      "item": [
+        {
+          "name": "00 Preparación · GET /ping y sufijo único",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ping",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ping"
+              ]
+            },
+            "description": "Debe responder 201. Genera {{sufijo}} único para este procedimiento (mitiga R16)."
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.collectionVariables.set('sufijo', Date.now().toString());",
+                  "pm.collectionVariables.set('creados', '[]');"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "00 Preparación · POST /auth (token)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"password123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Credenciales de prueba DAT-02. Guarda {{token}}."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const j = pm.response.json(); pm.collectionVariables.set('token', j.token || '');"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "00 Preparación · Crear reserva base (DAT-01)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/booking",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "booking"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstname\": \"Ana\",\n  \"lastname\": \"Prueba-{{sufijo}}\",\n  \"totalprice\": 150,\n  \"depositpaid\": true,\n  \"bookingdates\": {\n    \"checkin\": \"2026-12-10\",\n    \"checkout\": \"2026-12-11\"\n  },\n  \"additionalneeds\": \"Breakfast\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Crea la reserva base y guarda {{bookingid}}."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const j = pm.response.json(); pm.collectionVariables.set('bookingid', j.bookingid);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "TC-17 · GET /booking/999999999",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/booking/999999999",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "booking",
+                "999999999"
+              ]
+            },
+            "description": "EP ID inexistente. Esperado: 404."
+          }
+        },
+        {
+          "name": "TC-04 · GET /booking/{{bookingid}}",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/booking/{{bookingid}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "booking",
+                "{{bookingid}}"
+              ]
+            },
+            "description": "EP ID existente. Esperado: 200 con los datos de DAT-01."
+          }
+        },
+        {
+          "name": "TC-05 · PATCH solo firstname",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Cookie",
+                "value": "token={{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/booking/{{bookingid}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "booking",
+                "{{bookingid}}"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstname\": \"Ana Lucía\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "EP cuerpo parcial. Esperado: 200."
+          }
+        },
+        {
+          "name": "TC-05 · Verificación GET /booking/{{bookingid}}",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/booking/{{bookingid}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "booking",
+                "{{bookingid}}"
+              ]
+            },
+            "description": "Esperado: solo firstname = 'Ana Lucía'; demás campos iguales a TC-04."
+          }
+        },
+        {
+          "name": "99 Cierre · DELETE /booking/{{bookingid}}",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Cookie",
+                "value": "token={{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/booking/{{bookingid}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "booking",
+                "{{bookingid}}"
+              ]
+            },
+            "description": "Esperado: 201."
+          }
+        },
+        {
+          "name": "99 Cierre · Verificar eliminación",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/booking/{{bookingid}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "booking",
+                "{{bookingid}}"
+              ]
+            },
+            "description": "Esperado: 404."
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://restful-booker.herokuapp.com"
+    },
+    {
+      "key": "sufijo",
+      "value": ""
+    },
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "bookingid",
+      "value": ""
+    },
+    {
+      "key": "creados",
+      "value": "[]"
+    },
+    {
+      "key": "id_TC02",
+      "value": ""
+    },
+    {
+      "key": "id_TC09",
+      "value": ""
+    }
+  ]
+}
