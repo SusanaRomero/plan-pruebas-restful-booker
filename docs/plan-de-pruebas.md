@@ -483,7 +483,7 @@ Cobertura 0-switch: 6 de 6 transiciones válidas (100 %) y 2 transiciones invál
 | Precondiciones | `GET /ping` → 201. |
 | Entrada | `POST {{baseUrl}}/booking` con DAT-01, `lastname: "Prueba-{{sufijo}}-TC01"`, `checkin: "2026-12-10"`, `checkout: "2026-12-09"`. |
 | Resultado esperado | Rechazo (400). La respuesta no contiene `bookingid`. `GET /booking?firstname=Ana&lastname=Prueba-{{sufijo}}-TC01` devuelve `[]`. |
-| Resultado real | |
+| Resultado real | POST: 200 OK, bookingid 1515 | Verificación: 200, mismos datos |Pasa|
 | Estado / Incidente | |
 
 ##### TC-02 · Crear una reserva de una noche (estadía mínima válida)
