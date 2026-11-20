@@ -1,4 +1,4 @@
-# Plan de pruebas de la API RESTful Booker – Módulo de reservas (v1.2)
+# Plan de pruebas de la API RESTful Booker – Módulo de reservas (v1.3)
 
 > Plan de pruebas según ISO/IEC/IEEE 29119-3, con enfoque de pruebas basadas en riesgos (RBT).
 > Los casos manuales están en este documento; los casos automatizados están en [`/tests`](../tests/flujos_criticos.spec.js).
@@ -24,7 +24,7 @@
 |---|---|
 | Identificador | **PP-RB-2026-001** |
 | Título | Plan de pruebas de la API RESTful Booker – Módulo de reservas |
-| Versión | 1.2 |
+| Versión | 1.3 |
 | Estado | En ejecución: ciclo 1 completo (pendiente de firma del auditor) |
 | Release de GitHub | `v1.0.0` |
 | Commit de referencia | `<SHA del commit del release>` *(se completa al publicar el release)* |
@@ -37,7 +37,7 @@ El identificador sigue la convención `PP` (plan de pruebas) – `RB` (RESTful B
 | Campo | Detalle |
 |---|---|
 | Organización emisora | Institución Universitaria Pascual Bravo – Curso de Pruebas de Software – Equipo RESTful Booker |
-| Autoría | **Susana Romero García** (Analista de pruebas): versiones 1.0 a 1.2 y todas las tareas del ciclo de pruebas · Miguel Angel Vallejo Giroldo (Test Manager): versiones 0.1 a 0.4 |
+| Autoría | **Susana Romero García** (Analista de pruebas): versiones 1.0 a 1.3 y todas las tareas del ciclo de pruebas · Miguel Angel Vallejo Giroldo (Test Manager): versiones 0.1 a 0.4 |
 | Integrantes del equipo | Miguel Angel Vallejo Giroldo (Test Manager) · Susana Romero García (Analista de pruebas) · Luisa Fernanda Tamayo Arias (Analista de pruebas) · Santiago Montoya Restrepo (Automatizador) |
 | Equipos revisores (coevaluación) | Mateo Villada, Keyner Gil, Jeyson González (actividad 1) · Nicolás Castaño, Julián Ramírez, Sebastián Díaz, Marcos Duque (actividad 2) |
 
@@ -61,6 +61,7 @@ La aprobación se registra como *review* aprobado en el *pull request* que publi
 | 1.0 | 17/11/2026 | S. Romero | Consolidación ISO 29119-3 + RBT: declaración de tailoring; matriz de riesgos v2.0 con 4 niveles y 19 riesgos; R01 se divide en R01 y R08; R06 se recalifica a Alto; TC-06 se retira (R05 aceptado); 22 casos con trazabilidad bidireccional; WBS de 94,5 h; cronograma de 3 semanas. |
 | 1.1 | 20/11/2026 | S. Romero | Resultados del ciclo 1: 17 casos manuales ejecutados (12 pasan, 5 fallan) y 5 automatizados (5 pasan); 8 incidentes en `registro-incidentes.md`; resumen de ejecución en la sección 5.3.5. |
 | 1.2 | 20/11/2026 | S. Romero | Asignación real de tareas: todo el ciclo (hecho y pendiente) queda a cargo de S. Romero; se adapta la regla de independencia (2.3 y 5.5), se recalcula la WBS (84 h, sección 6), se recalifica R19 a Medio y se actualiza el cronograma con lo ya ejecutado. |
+| 1.3 | 20/11/2026 | S. Romero | Re-ejecución de PROC-01 en una sesión independiente (16:16): los 6 casos repiten su resultado; INC-01 a INC-04 quedan reproducidos. La regla de independencia pasa de "otra fecha" a "otra sesión". |
 
 **Reglas de control de versiones**
 
@@ -122,8 +123,8 @@ El documento cubre los niveles de **prueba de sistema** y **prueba de API** (caj
 | Reporte de incidentes | **Incluido** | `docs/registro-incidentes.md`. | — | — |
 | Informe de estado de pruebas | **Adaptado** | Se reemplaza por la revisión semanal de 30 min registrada en el *issue* de seguimiento. | Menor visibilidad formal del avance para terceros. | El auditor ve el avance en los *commits* y *pull requests*. |
 | Informe de cierre de pruebas | **Incluido (simplificado)** | Se entrega en la semana 3 como parte del release. | — | — |
-| Proceso de monitoreo y control (29119-2) | **Adaptado** | Un punto de control semanal en lugar de monitoreo continuo. | Detectar tarde una desviación del cronograma. | Columna "Estado" en la WBS y reserva de 7 h (23 % de la capacidad restante, secc. 6.2). |
-| Independencia de las pruebas (diseñador ≠ ejecutor) | **Adaptado** | Una sola integrante diseña y ejecuta todos los casos. | Sesgo de confirmación: quien diseña tiende a "ver" el resultado que espera. | (1) Los resultados esperados quedaron versionados en GitHub el 19/11, antes de ejecutar (20/11); (2) cada caso tiene captura como evidencia; (3) los 5 automatizados los ejecuta GitHub Actions sin intervención humana; (4) re-ejecución de PROC-01 en otra fecha (tarea 6.1). |
+| Proceso de monitoreo y control (29119-2) | **Adaptado** | Un punto de control semanal en lugar de monitoreo continuo. | Detectar tarde una desviación del cronograma. | Columna "Estado" en la WBS y reserva de 9,5 h (32 % de la capacidad restante, secc. 6.2). |
+| Independencia de las pruebas (diseñador ≠ ejecutor) | **Adaptado** | Una sola integrante diseña y ejecuta todos los casos. | Sesgo de confirmación: quien diseña tiende a "ver" el resultado que espera. | (1) Los resultados esperados quedaron versionados en GitHub el 19/11, antes de ejecutar (20/11); (2) cada caso tiene captura como evidencia; (3) los 5 automatizados los ejecuta GitHub Actions sin intervención humana; (4) re-ejecución de los casos fallidos en una sesión independiente: preparación nueva, datos nuevos y capturas nuevas (tarea 6.1). |
 
 **Tipos de prueba excluidos y riesgo que se asume**
 
@@ -215,7 +216,7 @@ El documento cubre los niveles de **prueba de sistema** y **prueba de API** (caj
 |---|---|---|
 | S-01 | No existe una especificación formal de requisitos. El **oráculo** es, en este orden: (1) la documentación oficial de la API; (2) la semántica HTTP del RFC 9110; (3) reglas de negocio razonables definidas por el equipo (salida posterior a la entrada, precio ≥ 0, fechas válidas, campos obligatorios). | Algunos "fallos" podrían ser decisiones de diseño. Cada incidente indica qué fuente del oráculo usó. |
 | S-02 | Las credenciales de prueba publicadas (`admin` / `password123`) siguen vigentes. | Se bloquean R02, R04 y R06 → criterio de suspensión (5.5). |
-| S-03 | Susana Romero realiza todas las tareas; para las semanas 2 y 3 dedica 15 h por semana. | Se usa la reserva de 7 h y, si no alcanza, se recorta según el orden de la sección 6.2. |
+| S-03 | Susana Romero realiza todas las tareas; para las semanas 2 y 3 dedica 15 h por semana. | Se usa la reserva de 9,5 h y, si no alcanza, se recorta según el orden de la sección 6.2. |
 | S-04 | La API es de un tercero: **el equipo no puede corregir los defectos**. El re-test confirma que el defecto es reproducible y lo documenta como riesgo residual. | — |
 | S-05 | La ejecutora tiene experiencia limitada en automatización (riesgo R17). | Los scripts se ejecutan en GitHub Actions; si fallan, se usa la tarea 4.3 de depuración. |
 
@@ -331,7 +332,7 @@ La matriz v1.1 tenía 7 riesgos. En esta versión 2.0 se completó el listado pa
 | R05 | Bajo | **Aceptar** | Sin casos dedicados. Se ejerce de forma incidental en TC-20 (transición T5 → T6) y en el cierre de todos los procedimientos. Por eso se retira TC-06 de la versión 0.4. | — |
 | R13, R14, R15 | Bajo | **Aceptar (excluido por tailoring)** | Fuera de alcance. Si en la ejecución se observa una respuesta > 2 s, se anota sin abrir incidente. | — |
 | R07 | Medio (proyecto) | **Mitigar con acciones** | Cada procedimiento se ejecuta completo en menos de 10 min y crea sus propios datos; los scripts reintentan una vez; si una reserva desaparece, se marca "Bloqueado", no "Falla". | — |
-| R18 | Medio (proyecto) | **Mitigar con acciones** | La ejecución se adelantó a la semana 1; quedan 23 h para dos semanas con 7 h de reserva. | — |
+| R18 | Medio (proyecto) | **Mitigar con acciones** | La ejecución y la re-ejecución de PROC-01 se adelantaron a la semana 1; quedan 20,5 h para dos semanas con 9,5 h de reserva. | — |
 | R17 | Medio (proyecto) | **Mitigar con acciones** | Scripts verificados primero con un simulador local y luego en GitHub Actions (5 de 5 en verde el 19/11). | — |
 | R16 | Bajo (proyecto) | **Aceptar con acción preventiva de costo cero** | Apellidos únicos con marca de tiempo (`Prueba-{{sufijo}}`). | — |
 | R19 | Medio (proyecto) | **Mitigar con acciones** | Todo está versionado en GitHub (plan, colección, scripts y evidencias): cualquier integrante puede retomar el trabajo, y GitHub Actions ejecuta la regresión sin depender de nadie. | — |
@@ -487,8 +488,8 @@ Cobertura 0-switch: 6 de 6 transiciones válidas (100 %) y 2 transiciones invál
 | Precondiciones | `GET /ping` → 201. |
 | Entrada | `POST {{baseUrl}}/booking` con DAT-01, `lastname: "Prueba-{{sufijo}}-TC01"`, `checkin: "2026-12-10"`, `checkout: "2026-12-09"`. |
 | Resultado esperado | Rechazo (400). La respuesta no contiene `bookingid`. `GET /booking?firstname=Ana&lastname=Prueba-{{sufijo}}-TC01` devuelve `[]`. |
-| Resultado real | POST → **200 OK** con `bookingid` 991: la API **aceptó** `checkout` 2026-12-09 anterior a `checkin` 2026-12-10. Verificación por apellido → `[{"bookingid": 991}]`: la reserva quedó guardada. Evidencia: [POST](evidencias/TC-01_20261120.png) · [verificación](evidencias/TC-01_verif_20261120.png) |
-| Estado / Incidente | ❌ Falla · [INC-01](registro-incidentes.md#inc-01) · Ejecutó: Susana Romero · 20/11/2026 · ⏳ Re-ejecución de PROC-01 pendiente (tarea 6.1) |
+| Resultado real | POST → **200 OK** con `bookingid` 991: la API **aceptó** `checkout` 2026-12-09 anterior a `checkin` 2026-12-10. Verificación por apellido → `[{"bookingid": 991}]`: la reserva quedó guardada. Evidencia: [POST](evidencias/TC-01_20261120.png) · [verificación](evidencias/TC-01_verif_20261120.png)<br>**Re-ejecución (sesión independiente, 20/11/2026 16:16):** **200 OK** con `bookingid` 3756 (salida 2026-12-09 antes de entrada 2026-12-10); verificación → `[{"bookingid": 3756}]`. Evidencia: [POST](evidencias/TC-01_rerun_20261120-1616.png) · [verificación](evidencias/TC-01_rerun_verif_20261120-1616.png) |
+| Estado / Incidente | ❌ Falla · [INC-01](registro-incidentes.md#inc-01) · Ejecutó: Susana Romero · 20/11/2026 · 🔁 Re-ejecución 20/11 16:16: ❌ Falla reproducida |
 
 ##### TC-02 · Crear una reserva de una noche (estadía mínima válida)
 
@@ -501,8 +502,8 @@ Cobertura 0-switch: 6 de 6 transiciones válidas (100 %) y 2 transiciones invál
 | Precondiciones | `GET /ping` → 201. |
 | Entrada | `POST {{baseUrl}}/booking` con DAT-01, `lastname: "Prueba-{{sufijo}}-TC02"`, `checkin: "2026-12-10"`, `checkout: "2026-12-11"`. |
 | Resultado esperado | 200 con `bookingid` y `booking` igual a lo enviado. `GET /booking/{bookingid}` → 200 con los mismos datos. |
-| Resultado real | POST → **200 OK** con `bookingid` 1515 y `booking` igual a lo enviado. Verificación `GET /booking/1515` → 200 con los mismos datos. Evidencia: [POST](evidencias/TC-02_20261119-1640.png) · [verificación](evidencias/TC-02_verif_20261119-1640.png) |
-| Estado / Incidente | ✅ Pasa · Ejecutó: Susana Romero · 19/11/2026 · ⏳ Re-ejecución de PROC-01 pendiente (tarea 6.1) |
+| Resultado real | POST → **200 OK** con `bookingid` 1515 y `booking` igual a lo enviado. Verificación `GET /booking/1515` → 200 con los mismos datos. Evidencia: [POST](evidencias/TC-02_20261119-1640.png) · [verificación](evidencias/TC-02_verif_20261119-1640.png)<br>**Re-ejecución (sesión independiente, 20/11/2026 16:16):** **200 OK** con `bookingid` 2868; verificación → 200 con los mismos datos. Evidencia: [POST](evidencias/TC-02_rerun_20261120-1616.png) · [verificación](evidencias/TC-02_rerun_verif_20261120-1616.png) |
+| Estado / Incidente | ✅ Pasa · Ejecutó: Susana Romero · 19/11/2026 · 🔁 Re-ejecución 20/11 16:16: ✅ Pasa (confirmado) |
 
 ##### TC-07 · Rechazar una reserva con 0 noches (entrada y salida el mismo día)
 
@@ -515,8 +516,8 @@ Cobertura 0-switch: 6 de 6 transiciones válidas (100 %) y 2 transiciones invál
 | Precondiciones | `GET /ping` → 201. |
 | Entrada | `POST {{baseUrl}}/booking` con DAT-01, `lastname: "Prueba-{{sufijo}}-TC07"`, `checkin: "2026-12-10"`, `checkout: "2026-12-10"`. |
 | Resultado esperado | Rechazo (400). Sin `bookingid`. El filtro por `lastname` devuelve `[]`. |
-| Resultado real | POST → **200 OK** con `bookingid` 1907: la API **aceptó** `checkin` = `checkout` = 2026-12-10 (0 noches). Verificación por apellido → `[{"bookingid": 1907}]`. Evidencia: [POST](evidencias/TC-07_20261120.png) · [verificación](evidencias/TC-07_verif_20261120.png) |
-| Estado / Incidente | ❌ Falla · [INC-02](registro-incidentes.md#inc-02) · Ejecutó: Susana Romero · 20/11/2026 · ⏳ Re-ejecución de PROC-01 pendiente (tarea 6.1) |
+| Resultado real | POST → **200 OK** con `bookingid` 1907: la API **aceptó** `checkin` = `checkout` = 2026-12-10 (0 noches). Verificación por apellido → `[{"bookingid": 1907}]`. Evidencia: [POST](evidencias/TC-07_20261120.png) · [verificación](evidencias/TC-07_verif_20261120.png)<br>**Re-ejecución (sesión independiente, 20/11/2026 16:16):** **200 OK** con `bookingid` 4101 (0 noches); verificación → `[{"bookingid": 4101}]`. Evidencia: [POST](evidencias/TC-07_rerun_20261120-1616.png) · [verificación](evidencias/TC-07_rerun_verif_20261120-1616.png) |
+| Estado / Incidente | ❌ Falla · [INC-02](registro-incidentes.md#inc-02) · Ejecutó: Susana Romero · 20/11/2026 · 🔁 Re-ejecución 20/11 16:16: ❌ Falla reproducida |
 
 ##### TC-08 · Rechazar una reserva con precio negativo
 
@@ -529,8 +530,8 @@ Cobertura 0-switch: 6 de 6 transiciones válidas (100 %) y 2 transiciones invál
 | Precondiciones | `GET /ping` → 201. |
 | Entrada | `POST {{baseUrl}}/booking` con DAT-01, `lastname: "Prueba-{{sufijo}}-TC08"`, `totalprice: -1`. |
 | Resultado esperado | Rechazo (400). Sin `bookingid`. El filtro por `lastname` devuelve `[]`. |
-| Resultado real | POST → **200 OK** con `bookingid` 2766 y `totalprice: -1` guardado. Verificación por apellido → `[{"bookingid": 2766}]`. Evidencia: [POST](evidencias/TC-08_20261120.png) · [verificación](evidencias/TC-08_verif_20261120.png) |
-| Estado / Incidente | ❌ Falla · [INC-03](registro-incidentes.md#inc-03) · Ejecutó: Susana Romero · 20/11/2026 · ⏳ Re-ejecución de PROC-01 pendiente (tarea 6.1) |
+| Resultado real | POST → **200 OK** con `bookingid` 2766 y `totalprice: -1` guardado. Verificación por apellido → `[{"bookingid": 2766}]`. Evidencia: [POST](evidencias/TC-08_20261120.png) · [verificación](evidencias/TC-08_verif_20261120.png)<br>**Re-ejecución (sesión independiente, 20/11/2026 16:16):** **200 OK** con `bookingid` 4497 y `totalprice: -1`; verificación → `[{"bookingid": 4497}]`. Evidencia: [POST](evidencias/TC-08_rerun_20261120-1616.png) · [verificación](evidencias/TC-08_rerun_verif_20261120-1616.png) |
+| Estado / Incidente | ❌ Falla · [INC-03](registro-incidentes.md#inc-03) · Ejecutó: Susana Romero · 20/11/2026 · 🔁 Re-ejecución 20/11 16:16: ❌ Falla reproducida |
 
 ##### TC-09 · Crear una reserva con precio 0
 
@@ -543,8 +544,8 @@ Cobertura 0-switch: 6 de 6 transiciones válidas (100 %) y 2 transiciones invál
 | Precondiciones | `GET /ping` → 201. |
 | Entrada | `POST {{baseUrl}}/booking` con DAT-01, `lastname: "Prueba-{{sufijo}}-TC09"`, `totalprice: 0`. |
 | Resultado esperado | 200 con `bookingid`; `GET /booking/{bookingid}` muestra `totalprice: 0` y el resto igual a lo enviado. |
-| Resultado real | POST → **200 OK** con `bookingid` y `totalprice: 0`. Verificación `GET /booking/{id}` → 200 con `totalprice: 0` y el resto igual. *Observación: la captura del POST corresponde al envío del 19/11 (sufijo distinto al de la verificación); retomar en la re-ejecución.* Evidencia: [POST](evidencias/TC-09_20261120.png) · [verificación](evidencias/TC-09_verif_20261120.png) |
-| Estado / Incidente | ✅ Pasa · Ejecutó: Susana Romero · 20/11/2026 · ⏳ Re-ejecución de PROC-01 pendiente (tarea 6.1) |
+| Resultado real | POST → **200 OK** con `bookingid` y `totalprice: 0`. Verificación `GET /booking/{id}` → 200 con `totalprice: 0` y el resto igual. *Observación: la captura del POST corresponde al envío del 19/11 (sufijo distinto al de la verificación); retomar en la re-ejecución.* Evidencia: [POST](evidencias/TC-09_20261120.png) · [verificación](evidencias/TC-09_verif_20261120.png)<br>**Re-ejecución (sesión independiente, 20/11/2026 16:16):** **200 OK** con `bookingid` 3198 y `totalprice: 0`; verificación → 200 con los mismos datos. Evidencia: [POST](evidencias/TC-09_rerun_20261120-1616.png) · [verificación](evidencias/TC-09_rerun_verif_20261120-1616.png) |
+| Estado / Incidente | ✅ Pasa · Ejecutó: Susana Romero · 20/11/2026 · 🔁 Re-ejecución 20/11 16:16: ✅ Pasa (confirmado) |
 
 ##### TC-10 · Rechazar una reserva con precio no numérico
 
@@ -557,8 +558,8 @@ Cobertura 0-switch: 6 de 6 transiciones válidas (100 %) y 2 transiciones invál
 | Precondiciones | `GET /ping` → 201. |
 | Entrada | `POST {{baseUrl}}/booking` con DAT-01, `lastname: "Prueba-{{sufijo}}-TC10"`, `totalprice: "cien"`. |
 | Resultado esperado | Rechazo (400). Sin `bookingid`. El filtro por `lastname` devuelve `[]`. |
-| Resultado real | POST → **200 OK** con `bookingid` 3364: la API **aceptó** `totalprice: "cien"` y lo guardó como **`null`** (se pierde el precio). Verificación por apellido → encontró una reserva con ese apellido (`bookingid` 856; el ID distinto indica que el POST se reenvió tras un reinicio de la instancia, R07). Evidencia: [POST](evidencias/TC-10_20261120.png) · [verificación](evidencias/TC-10_verif_20261120.png) |
-| Estado / Incidente | ❌ Falla · [INC-04](registro-incidentes.md#inc-04) · Ejecutó: Susana Romero · 20/11/2026 · ⏳ Re-ejecución de PROC-01 pendiente (tarea 6.1) |
+| Resultado real | POST → **200 OK** con `bookingid` 3364: la API **aceptó** `totalprice: "cien"` y lo guardó como **`null`** (se pierde el precio). Verificación por apellido → encontró una reserva con ese apellido (`bookingid` 856; el ID distinto indica que el POST se reenvió tras un reinicio de la instancia, R07). Evidencia: [POST](evidencias/TC-10_20261120.png) · [verificación](evidencias/TC-10_verif_20261120.png)<br>**Re-ejecución (sesión independiente, 20/11/2026 16:16):** **200 OK** con `bookingid` 4891 y `totalprice: null`; verificación → `[{"bookingid": 4891}]`. Evidencia: [POST](evidencias/TC-10_rerun_20261120-1616.png) · [verificación](evidencias/TC-10_rerun_verif_20261120-1616.png) |
+| Estado / Incidente | ❌ Falla · [INC-04](registro-incidentes.md#inc-04) · Ejecutó: Susana Romero · 20/11/2026 · 🔁 Re-ejecución 20/11 16:16: ❌ Falla reproducida |
 
 ##### TC-11 · Rechazar una reserva sin un campo obligatorio
 
@@ -790,7 +791,7 @@ Ejecución del 19 y 20 de noviembre de 2026. El detalle de cada caso está en su
 
 | Procedimiento | Ejecutó | Casos | ✅ Pasan | ❌ Fallan | Incidentes |
 |---|---|---|---|---|---|
-| PROC-01 · Fechas y precio | Susana Romero | 6 | 2 (TC-02, TC-09) | 4 (TC-01, TC-07, TC-08, TC-10) | INC-01 a INC-04 |
+| PROC-01 · Fechas y precio | Susana Romero (sesión 1: 15:11 · sesión 2: 16:16) | 6 | 2 (TC-02, TC-09) | 4 (TC-01, TC-07, TC-08, TC-10) | INC-01 a INC-04 (reproducidos) |
 | PROC-02 · Estructura y formato | Susana Romero | 3 | 2 (TC-11, TC-12) | 1 (TC-13) | INC-05, INC-06, INC-07 |
 | PROC-03 · Modificación y autorización | Susana Romero | 5 | 5 | 0 | INC-08 |
 | PROC-04 · Consulta y modificación parcial | Susana Romero | 3 | 3 | 0 | — |
@@ -818,12 +819,12 @@ Ejecución del 19 y 20 de noviembre de 2026. El detalle de cada caso está en su
 | 3 | Valores límite y particiones de R08 | ✅ 100 % |
 | 4 | Riesgos Crítico y Alto con casos ejecutados | ✅ 4 de 4 |
 | 5 | Fallos con incidente registrado | ✅ 5 de 5 (más 3 de R10) |
-| 6 | Incidentes Críticos y Altos reproducidos | ⏳ Pendiente (re-test, semana 3) |
-| 7 | Independencia adaptada (2.3) | ✅ Resultados esperados versionados antes de ejecutar; ⏳ re-ejecución de PROC-01 en otra fecha (tarea 6.1), que también sirve como re-test de INC-01 a INC-04. |
+| 6 | Incidentes Críticos y Altos reproducidos | ⏳ 4 de 5: INC-01 a INC-04 reproducidos el 20/11; falta INC-07 (tarea 6.2) |
+| 7 | Independencia adaptada (2.3) | ✅ Resultados esperados versionados antes de ejecutar; ✅ PROC-01 re-ejecutado en una sesión independiente (20/11, 16:16). |
 | 8 | Trazabilidad sin huérfanos | ✅ |
 | 9 | Scripts automatizados | ✅ 5 de 5 |
 
-**Observaciones de la ejecución:** en PROC-03 la preparación (`00`) se repitió entre casos, por lo que las verificaciones de TC-15 y TC-16 muestran una reserva base recién creada (`totalprice: 150`). El resultado es válido (no aparece el 999), pero en la re-ejecución conviene correr la preparación una sola vez. La captura del POST de TC-09 corresponde al envío del 19/11; se reemplaza en la re-ejecución de PROC-01.
+**Observaciones de la ejecución:** en PROC-03 la preparación (`00`) se repitió entre casos, por lo que las verificaciones de TC-15 y TC-16 muestran una reserva base recién creada (`totalprice: 150`). El resultado es válido (no aparece el 999), pero en la re-ejecución conviene correr la preparación una sola vez. La captura del POST de TC-09 de la primera sesión corresponde al envío del 19/11; la re-ejecución (16:16) aporta una evidencia completa y consistente.
 
 ### 5.4 Requisitos de entorno y datos de prueba
 
@@ -876,7 +877,7 @@ No se usan datos personales reales. Todos los datos son sintéticos y cada proce
 | 4 | Riesgos Crítico y Alto con al menos un caso ejecutado | 100 % (4 de 4) |
 | 5 | Fallos con incidente registrado en `docs/registro-incidentes.md` | 100 % |
 | 6 | Incidentes Críticos y Altos reproducidos en un segundo intento (re-test) | 100 % |
-| 7 | Independencia adaptada (2.3): resultados esperados versionados en GitHub antes de ejecutar, captura por caso y re-ejecución de los casos fallidos en otra fecha | 100 % |
+| 7 | Independencia adaptada (2.3): resultados esperados versionados en GitHub antes de ejecutar, captura por caso y re-ejecución de los casos fallidos en una sesión independiente | 100 % |
 | 8 | Trazabilidad bidireccional sin huérfanos | Verificada en la auditoría de trazabilidad (tarea 7.1) |
 | 9 | Scripts automatizados | 5 de 5 ejecutan; si alguno falla por un defecto real, tiene incidente asociado |
 
@@ -922,7 +923,7 @@ Todas las tareas están a cargo de **SR** (Susana Romero García). Estado al 20/
 | 5.5 | Reporte de incidentes de PROC-01 (INC-01 a INC-04) | SR | S1 | 2,0 | ✅ 20/11 | 5.1 |
 | 5.6 | PROC-05: regresión automatizada y evidencia del reporte | SR | S1 | 1,0 | ✅ 19/11 | 2.3, 4.1 |
 | **6.0** | **Re-test y regresión** | | | **5,5** | | |
-| 6.1 | Re-ejecución de PROC-01 con capturas nuevas (re-test de INC-01 a INC-04) | SR | S2 | 2,5 | ⏳ Pendiente | 5.5 |
+| 6.1 | Re-ejecución de PROC-01 en una sesión independiente (re-test de INC-01 a INC-04) | SR | S1 | 2,5 | ✅ 20/11 | 5.5 |
 | 6.2 | Re-test de INC-05 a INC-08 y regresión manual | SR | S2 | 2,5 | ⏳ Pendiente | 5.4 |
 | 6.3 | Regresión automatizada final | SR | S3 | 0,5 | ⏳ Pendiente | 4.3 |
 | **7.0** | **Trazabilidad, cierre y release** | | | **11,0** | | |
@@ -953,23 +954,23 @@ Las horas son **estimadas**, no horas registradas.
 
 ```text
 Esfuerzo total estimado (WBS)                         = 84,0 h
-Esfuerzo ya completado al 20/11 (semana 1)            = 61,0 h
-Esfuerzo pendiente                                    = 23,0 h
+Esfuerzo ya completado al 20/11 (semana 1)            = 63,5 h
+Esfuerzo pendiente                                    = 20,5 h
 
 Capacidad restante = 1 persona × 2 semanas × 15 h      = 30,0 h
-Reserva de contingencia = 30,0 − 23,0                 =  7,0 h  (23 % de la capacidad restante)
+Reserva de contingencia = 30,0 − 20,5                 =  9,5 h  (32 % de la capacidad restante)
 ```
 
 **Carga por semana** (Susana Romero)
 
 | Semana | Horas estimadas | Estado |
 |---|---|---|
-| S1 (16–22/11) | 61,5 | ✅ Completa: diseño, entorno, automatización y ejecución de los 22 casos se adelantaron a esta semana. |
-| S2 (23–29/11) | 8,5 | ⏳ Autorrevisión, revisión de código y re-tests. |
+| S1 (16–22/11) | 64,0 | ✅ Completa: diseño, entorno, automatización, ejecución de los 22 casos y re-ejecución de PROC-01 se adelantaron a esta semana. |
+| S2 (23–29/11) | 6,0 | ⏳ Autorrevisión, revisión de código y re-test de INC-05 a INC-08. |
 | S3 (30/11–06/12) | 14,0 | ⏳ Estabilización, trazabilidad, informe de cierre y release. |
 | **Total** | **84,0** | |
 
-- La ejecución estaba prevista para la semana 2 y se realizó en la semana 1. Esa desviación es favorable: deja las semanas 2 y 3 con 23 h de trabajo y 7 h de reserva.
+- La ejecución estaba prevista para la semana 2 y se realizó en la semana 1. Esa desviación es favorable: deja las semanas 2 y 3 con 20,5 h de trabajo y 9,5 h de reserva.
 - Si la reserva se agota, el orden de recorte es: (1) la regresión manual de PROC-04 (P2); (2) el re-test de INC-08 (severidad Baja). Nunca se recortan casos P1.
 
 ---
@@ -1022,7 +1023,8 @@ gantt
     Ejecución manual PROC-01 a PROC-04 (5.1–5.3)         :done, b2, 2026-11-19, 2d
     Registro de incidentes (5.4, 5.5)                    :done, b3, 2026-11-20, 1d
     Revisión de código (4.2)                             :b4, 2026-11-24, 2d
-    Re-ejecución de PROC-01 y re-tests (6.1, 6.2)        :b5, 2026-11-25, 3d
+    Re-ejecución de PROC-01 (6.1)                        :done, b5, 2026-11-20, 1d
+    Re-test de INC-05 a INC-08 (6.2)                     :b6, 2026-11-25, 3d
     section Cierre
     Estabilización y regresión final (4.3, 6.3)          :c1, 2026-11-30, 2d
     Trazabilidad e informe de cierre (7.1, 7.2)          :c2, 2026-12-01, 2d

@@ -20,12 +20,14 @@
 
 ## Resumen del ciclo 1 (19 y 20 de noviembre de 2026)
 
+INC-01 a INC-04 se reprodujeron en una segunda sesión independiente (20/11/2026, 16:16). INC-05 a INC-08 tienen el re-test pendiente (tarea 6.2).
+
 | ID | Caso | Riesgo | Título | Severidad | Oráculo | Estado |
 |---|---|---|---|---|---|---|
-| [INC-01](#inc-01) | TC-01 | R08 | Se acepta una reserva con salida anterior a la entrada | Alta | REGLA | Abierto |
-| [INC-02](#inc-02) | TC-07 | R08 | Se acepta una reserva de 0 noches | Alta | REGLA | Abierto |
-| [INC-03](#inc-03) | TC-08 | R08 | Se acepta un precio total negativo | Alta | REGLA | Abierto |
-| [INC-04](#inc-04) | TC-10 | R08 | Un precio no numérico se acepta y se guarda como `null` | Alta | DOC | Abierto |
+| [INC-01](#inc-01) | TC-01 | R08 | Se acepta una reserva con salida anterior a la entrada | Alta | REGLA | Reproducido |
+| [INC-02](#inc-02) | TC-07 | R08 | Se acepta una reserva de 0 noches | Alta | REGLA | Reproducido |
+| [INC-03](#inc-03) | TC-08 | R08 | Se acepta un precio total negativo | Alta | REGLA | Reproducido |
+| [INC-04](#inc-04) | TC-10 | R08 | Un precio no numérico se acepta y se guarda como `null` | Alta | DOC | Reproducido |
 | [INC-05](#inc-05) | TC-11 | R10 | Falta de un campo obligatorio responde 500 en lugar de 400 | Media | HTTP | Abierto |
 | [INC-06](#inc-06) | TC-12 | R10 | `Content-Type` no JSON responde 500 en lugar de 415/400 | Media | HTTP | Abierto |
 | [INC-07](#inc-07) | TC-13 | R08 | Una fecha inexistente se acepta y se guarda cambiada | Alta | REGLA | Abierto |
@@ -53,8 +55,8 @@
 | Resultado obtenido | `200 OK` con `bookingid` 991; la reserva se guardó con las fechas invertidas. El filtro por apellido devuelve `[{"bookingid": 991}]`. |
 | Pasos para reproducir | 1. Ejecutar `00 Preparación` de PROC-01. 2. Enviar `TC-01 · POST /booking`. 3. Enviar `TC-01 · Verificación por apellido`. |
 | Evidencia | [POST](evidencias/TC-01_20261120.png) · [verificación](evidencias/TC-01_verif_20261120.png) |
-| Re-test | Pendiente: re-ejecución de PROC-01 en otra fecha (tarea 6.1). |
-| Estado | Abierto |
+| Re-test | ✅ Reproducido el 20/11/2026 a las 16:16 en una sesión independiente: `200 OK` con `bookingid` 3756. Evidencia: [POST](evidencias/TC-01_rerun_20261120-1616.png) · [verificación](evidencias/TC-01_rerun_verif_20261120-1616.png) |
+| Estado | Reproducido → riesgo residual |
 | Riesgo residual | Cualquier cliente puede registrar estadías imposibles; los cálculos que dependan de las fechas quedarían mal. |
 
 <a id="inc-02"></a>
@@ -73,8 +75,8 @@
 | Resultado obtenido | `200 OK` con `bookingid` 1907; el filtro por apellido la encuentra. |
 | Pasos para reproducir | 1. `00 Preparación` de PROC-01. 2. `TC-07 · POST /booking`. 3. `TC-07 · Verificación por apellido`. |
 | Evidencia | [POST](evidencias/TC-07_20261120.png) · [verificación](evidencias/TC-07_verif_20261120.png) |
-| Re-test | Pendiente: re-ejecución de PROC-01 en otra fecha (tarea 6.1). |
-| Estado | Abierto |
+| Re-test | ✅ Reproducido el 20/11/2026 a las 16:16 en una sesión independiente: `200 OK` con `bookingid` 4101. Evidencia: [POST](evidencias/TC-07_rerun_20261120-1616.png) · [verificación](evidencias/TC-07_rerun_verif_20261120-1616.png) |
+| Estado | Reproducido → riesgo residual |
 | Riesgo residual | Junto con INC-01, confirma que la API no valida la frontera de la regla de fechas: falla en el valor límite (0) y por debajo (−1). |
 
 <a id="inc-03"></a>
@@ -93,8 +95,8 @@
 | Resultado obtenido | `200 OK` con `bookingid` 2766 y `totalprice: -1` guardado. |
 | Pasos para reproducir | 1. `00 Preparación` de PROC-01. 2. `TC-08 · POST /booking`. 3. `TC-08 · Verificación por apellido`. |
 | Evidencia | [POST](evidencias/TC-08_20261120.png) · [verificación](evidencias/TC-08_verif_20261120.png) |
-| Re-test | Pendiente: re-ejecución de PROC-01 en otra fecha (tarea 6.1). |
-| Estado | Abierto |
+| Re-test | ✅ Reproducido el 20/11/2026 a las 16:16 en una sesión independiente: `200 OK` con `bookingid` 4497. Evidencia: [POST](evidencias/TC-08_rerun_20261120-1616.png) · [verificación](evidencias/TC-08_rerun_verif_20261120-1616.png) |
+| Estado | Reproducido → riesgo residual |
 | Riesgo residual | Pueden existir reservas con montos negativos; el valor límite válido (0, TC-09) sí funciona. |
 
 <a id="inc-04"></a>
@@ -113,8 +115,8 @@
 | Resultado obtenido | `200 OK` con `bookingid` 3364 y **`totalprice: null`**: la API descarta el valor sin avisar y guarda la reserva sin precio. |
 | Pasos para reproducir | 1. `00 Preparación` de PROC-01. 2. `TC-10 · POST /booking`. 3. `TC-10 · Verificación por apellido`. |
 | Evidencia | [POST](evidencias/TC-10_20261120.png) · [verificación](evidencias/TC-10_verif_20261120.png) |
-| Re-test | Pendiente: re-ejecución de PROC-01 en otra fecha (tarea 6.1). |
-| Estado | Abierto |
+| Re-test | ✅ Reproducido el 20/11/2026 a las 16:16 en una sesión independiente: `200 OK` con `bookingid` 4891. Evidencia: [POST](evidencias/TC-10_rerun_20261120-1616.png) · [verificación](evidencias/TC-10_rerun_verif_20261120-1616.png) |
+| Estado | Reproducido → riesgo residual |
 | Riesgo residual | Es el incidente más grave del ciclo: además de aceptar un dato inválido, **pierde información** (el precio queda vacío). En la verificación apareció el `bookingid` 856 en lugar de 3364, lo que indica que el POST se reenvió tras un reinicio de la instancia (R07); el comportamiento fue el mismo. |
 
 <a id="inc-05"></a>
