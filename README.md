@@ -53,7 +53,7 @@ Para apuntar a otra instancia: `BASE_URL=http://localhost:3001 npm test`.
 
 - **Ramas:** `main` está protegida. Cada tarea se hace en una rama propia: `docs/<tema>` para documentación y `test/<TC-xx>` para scripts.
 - **Commits:** en español, con prefijo y el ID afectado. Ejemplos: `docs(riesgos): recalifica R06 a Alto`, `test(TC-20): agrega transición T4`, `exec(PROC-01): resultados de TC-01 a TC-10`.
-- **Pull requests:** requieren aprobación del Test Manager. Los scripts los revisa alguien distinto de quien los escribió.
+- **Pull requests:** todo cambio entra por *pull request*, que deja registrado quién hizo cada cambio y cuándo.
 - **IDs:** nunca se reutiliza un ID retirado (por ejemplo, TC-06).
 - **Evidencias:** `docs/evidencias/TC-xx_AAAAMMDD-HHMM.png`.
 - **Enlace Markdown ↔ código:** los casos automatizados del plan no describen pasos; enlazan al bloque exacto del script. Si se mueven líneas del script, se actualiza el enlace en el mismo *pull request*.

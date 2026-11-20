@@ -1,4 +1,4 @@
-# Plan de pruebas de la API RESTful Booker – Módulo de reservas (v1.0)
+# Plan de pruebas de la API RESTful Booker – Módulo de reservas (v1.2)
 
 > Plan de pruebas según ISO/IEC/IEEE 29119-3, con enfoque de pruebas basadas en riesgos (RBT).
 > Los casos manuales están en este documento; los casos automatizados están en [`/tests`](../tests/flujos_criticos.spec.js).
@@ -24,8 +24,8 @@
 |---|---|
 | Identificador | **PP-RB-2026-001** |
 | Título | Plan de pruebas de la API RESTful Booker – Módulo de reservas |
-| Versión | 1.0 |
-| Estado | Aprobado para ejecución (pendiente de firma del auditor) |
+| Versión | 1.2 |
+| Estado | En ejecución: ciclo 1 completo (pendiente de firma del auditor) |
 | Release de GitHub | `v1.0.0` |
 | Commit de referencia | `<SHA del commit del release>` *(se completa al publicar el release)* |
 | Ubicación | `/docs/plan-de-pruebas.md` del repositorio `plan-pruebas-restful-booker` |
@@ -37,7 +37,8 @@ El identificador sigue la convención `PP` (plan de pruebas) – `RB` (RESTful B
 | Campo | Detalle |
 |---|---|
 | Organización emisora | Institución Universitaria Pascual Bravo – Curso de Pruebas de Software – Equipo RESTful Booker |
-| Autores | Miguel Angel Vallejo Giroldo (Test Manager) · Susana Romero García (Analista de pruebas) · Luisa Fernanda Tamayo Arias (Analista de pruebas) · Santiago Montoya Restrepo (Automatizador) |
+| Autoría | **Susana Romero García** (Analista de pruebas): versiones 1.0 a 1.2 y todas las tareas del ciclo de pruebas · Miguel Angel Vallejo Giroldo (Test Manager): versiones 0.1 a 0.4 |
+| Integrantes del equipo | Miguel Angel Vallejo Giroldo (Test Manager) · Susana Romero García (Analista de pruebas) · Luisa Fernanda Tamayo Arias (Analista de pruebas) · Santiago Montoya Restrepo (Automatizador) |
 | Equipos revisores (coevaluación) | Mateo Villada, Keyner Gil, Jeyson González (actividad 1) · Nicolás Castaño, Julián Ramírez, Sebastián Díaz, Marcos Duque (actividad 2) |
 
 ### 1.3 Autoridad de aprobación
@@ -53,15 +54,17 @@ La aprobación se registra como *review* aprobado en el *pull request* que publi
 
 | Versión | Fecha | Autor | Descripción del cambio |
 |---|---|---|---|
-| 0.1 | 22/09/2026 | Equipo | Inicio del plan: metodología ágil, objetivo general y alcance preliminar, con ajustes de la revisión cruzada. |
-| 0.2 | 24/09/2026 | Equipo | Identificación de los *test items* F01–F07, precondiciones y priorización. |
-| 0.3 | 13/10/2026 | Equipo | Matriz de riesgos v1.1 (R01–R07), técnicas, criterios de finalización y estimación inicial (30 h). |
-| 0.4 | Oct/2026 | Equipo | Especificación de casos TC-01 a TC-06 y procedimientos PROC-01 a PROC-03. |
-| 1.0 | 17/11/2026 | M. Vallejo (TM) | Consolidación ISO 29119-3 + RBT: declaración de tailoring; matriz de riesgos v2.0 con 4 niveles y 19 riesgos; R01 se divide en R01 y R08; R06 se recalifica a Alto; TC-06 se retira (R05 aceptado); 22 casos con trazabilidad bidireccional; WBS de 94,5 h; cronograma de 3 semanas. |
+| 0.1 | 22/09/2026 | M. Vallejo | Inicio del plan: metodología ágil, objetivo general y alcance preliminar, con ajustes de la revisión cruzada. |
+| 0.2 | 24/09/2026 | M. Vallejo | Identificación de los *test items* F01–F07, precondiciones y priorización. |
+| 0.3 | 13/10/2026 | M. Vallejo | Matriz de riesgos v1.1 (R01–R07), técnicas, criterios de finalización y estimación inicial (30 h). |
+| 0.4 | Oct/2026 | M. Vallejo | Especificación de casos TC-01 a TC-06 y procedimientos PROC-01 a PROC-03. |
+| 1.0 | 17/11/2026 | S. Romero | Consolidación ISO 29119-3 + RBT: declaración de tailoring; matriz de riesgos v2.0 con 4 niveles y 19 riesgos; R01 se divide en R01 y R08; R06 se recalifica a Alto; TC-06 se retira (R05 aceptado); 22 casos con trazabilidad bidireccional; WBS de 94,5 h; cronograma de 3 semanas. |
+| 1.1 | 20/11/2026 | S. Romero | Resultados del ciclo 1: 17 casos manuales ejecutados (12 pasan, 5 fallan) y 5 automatizados (5 pasan); 8 incidentes en `registro-incidentes.md`; resumen de ejecución en la sección 5.3.5. |
+| 1.2 | 20/11/2026 | S. Romero | Asignación real de tareas: todo el ciclo (hecho y pendiente) queda a cargo de S. Romero; se adapta la regla de independencia (2.3 y 5.5), se recalcula la WBS (84 h, sección 6), se recalifica R19 a Medio y se actualiza el cronograma con lo ya ejecutado. |
 
 **Reglas de control de versiones**
 
-- La rama `main` solo contiene versiones revisadas. Todo cambio entra por *pull request* con al menos una aprobación del Test Manager.
+- La rama `main` solo contiene versiones revisadas. Todo cambio entra por *pull request*, que deja registrado quién hizo cada cambio y cuándo.
 - Cambio menor (redacción, datos de un caso): sube el segundo dígito (1.0 → 1.1). Cambio de alcance, de riesgos o de casos: sube el primer dígito (1.x → 2.0).
 - Cada versión que se entrega al auditor se publica como *release* con *tag* (`v1.0.0`, `v1.1.0`, …).
 
@@ -99,7 +102,7 @@ El documento cubre los niveles de **prueba de sistema** y **prueba de API** (caj
 **Restricciones que obligan a adaptar.**
 
 1. **Tiempo:** ciclo cerrado de 3 semanas (planificación, ejecución y cierre).
-2. **Personas:** 4 integrantes con una dedicación estimada de 10 h por semana cada uno (120 h en total).
+2. **Personas:** el equipo tiene 4 integrantes, pero todas las tareas del ciclo las realiza una sola integrante (Susana Romero García).
 3. **Acceso técnico:** no hay acceso al código fuente, a la base de datos ni a los registros (*logs*) del servidor; solo a la API pública.
 4. **Entorno:** la instancia pública es compartida con otros usuarios y se reinicia cada 10 minutos.
 
@@ -119,7 +122,8 @@ El documento cubre los niveles de **prueba de sistema** y **prueba de API** (caj
 | Reporte de incidentes | **Incluido** | `docs/registro-incidentes.md`. | — | — |
 | Informe de estado de pruebas | **Adaptado** | Se reemplaza por la revisión semanal de 30 min registrada en el *issue* de seguimiento. | Menor visibilidad formal del avance para terceros. | El auditor ve el avance en los *commits* y *pull requests*. |
 | Informe de cierre de pruebas | **Incluido (simplificado)** | Se entrega en la semana 3 como parte del release. | — | — |
-| Proceso de monitoreo y control (29119-2) | **Adaptado** | Un punto de control semanal en lugar de monitoreo continuo. | Detectar tarde una desviación del cronograma. | Reserva de 25,5 h (21 %) en la semana 3 (secc. 6.2). |
+| Proceso de monitoreo y control (29119-2) | **Adaptado** | Un punto de control semanal en lugar de monitoreo continuo. | Detectar tarde una desviación del cronograma. | Columna "Estado" en la WBS y reserva de 7 h (23 % de la capacidad restante, secc. 6.2). |
+| Independencia de las pruebas (diseñador ≠ ejecutor) | **Adaptado** | Una sola integrante diseña y ejecuta todos los casos. | Sesgo de confirmación: quien diseña tiende a "ver" el resultado que espera. | (1) Los resultados esperados quedaron versionados en GitHub el 19/11, antes de ejecutar (20/11); (2) cada caso tiene captura como evidencia; (3) los 5 automatizados los ejecuta GitHub Actions sin intervención humana; (4) re-ejecución de PROC-01 en otra fecha (tarea 6.1). |
 
 **Tipos de prueba excluidos y riesgo que se asume**
 
@@ -211,9 +215,9 @@ El documento cubre los niveles de **prueba de sistema** y **prueba de API** (caj
 |---|---|---|
 | S-01 | No existe una especificación formal de requisitos. El **oráculo** es, en este orden: (1) la documentación oficial de la API; (2) la semántica HTTP del RFC 9110; (3) reglas de negocio razonables definidas por el equipo (salida posterior a la entrada, precio ≥ 0, fechas válidas, campos obligatorios). | Algunos "fallos" podrían ser decisiones de diseño. Cada incidente indica qué fuente del oráculo usó. |
 | S-02 | Las credenciales de prueba publicadas (`admin` / `password123`) siguen vigentes. | Se bloquean R02, R04 y R06 → criterio de suspensión (5.5). |
-| S-03 | Cada integrante dedica 10 h por semana al proyecto. | Se usa la reserva de 25,5 h y, si no alcanza, se reduce el alcance de riesgos Medios. |
+| S-03 | Susana Romero realiza todas las tareas; para las semanas 2 y 3 dedica 15 h por semana. | Se usa la reserva de 7 h y, si no alcanza, se recorta según el orden de la sección 6.2. |
 | S-04 | La API es de un tercero: **el equipo no puede corregir los defectos**. El re-test confirma que el defecto es reproducible y lo documenta como riesgo residual. | — |
-| S-05 | El equipo tiene experiencia limitada en automatización (riesgo R17). | Se planifica un *spike* de aprendizaje de 2 h (tarea 2.4). |
+| S-05 | La ejecutora tiene experiencia limitada en automatización (riesgo R17). | Los scripts se ejecutan en GitHub Actions; si fallan, se usa la tarea 4.3 de depuración. |
 
 **Restricciones**
 
@@ -284,7 +288,7 @@ La matriz v1.1 tenía 7 riesgos. En esta versión 2.0 se completó el listado pa
 | R18 | Tiempo | El ciclo de 3 semanas no alcanza y se retrasa la entrega. | 3 | 4 | 12 | 🟨 Medio |
 | R17 | Conocimiento | Curva de aprendizaje de Playwright retrasa la automatización. | 3 | 3 | 9 | 🟨 Medio |
 | R16 | Datos | Otros usuarios de la instancia pública crean reservas con los mismos nombres y contaminan las verificaciones. | 4 | 2 | 8 | 🟩 Bajo |
-| R19 | Personas | Ausencia o sobrecarga académica de un integrante. | 2 | 4 | 8 | 🟩 Bajo |
+| R19 | Personas | Ausencia o sobrecarga de la única integrante que ejecuta las tareas (dependencia de una sola persona). Recalificado en v1.2: P de 2 a 3. | 3 | 4 | 12 | 🟨 Medio |
 
 ### 4.2 Matriz de análisis de riesgos
 
@@ -305,11 +309,11 @@ La matriz v1.1 tenía 7 riesgos. En esta versión 2.0 se completó el listado pa
 |---|---|---|---|---|---|
 | **5 Casi seguro** | 🟩 5 | 🟨 10 | 🟧 15 | 🟥 20 | 🟥 25 |
 | **4 Probable** | 🟩 4 | 🟩 8 · R16 | 🟨 12 · R07, R10 | 🟧 16 | 🟥 20 · **R08** |
-| **3 Posible** | 🟩 3 | 🟩 6 · R13 | 🟨 9 · R09, R11, R17 | 🟨 12 · R03, R04, R12, R18 | 🟧 15 · **R01, R02, R06** |
-| **2 Improbable** | 🟩 2 | 🟩 4 · R15 | 🟩 6 · R14 | 🟩 8 · R05, R19 | 🟨 10 |
+| **3 Posible** | 🟩 3 | 🟩 6 · R13 | 🟨 9 · R09, R11, R17 | 🟨 12 · R03, R04, R12, R18, R19 | 🟧 15 · **R01, R02, R06** |
+| **2 Improbable** | 🟩 2 | 🟩 4 · R15 | 🟩 6 · R14 | 🟩 8 · R05 | 🟨 10 |
 | **1 Muy improbable** | 🟩 1 | 🟩 2 | 🟩 3 | 🟩 4 | 🟩 5 |
 
-**Resumen:** 1 Crítico, 3 Altos, 9 Medios y 6 Bajos (19 riesgos: 14 de producto y 5 de proyecto).
+**Resumen:** 1 Crítico, 3 Altos, 10 Medios y 5 Bajos (19 riesgos: 14 de producto y 5 de proyecto).
 
 ### 4.3 Tratamiento y mitigación
 
@@ -327,10 +331,10 @@ La matriz v1.1 tenía 7 riesgos. En esta versión 2.0 se completó el listado pa
 | R05 | Bajo | **Aceptar** | Sin casos dedicados. Se ejerce de forma incidental en TC-20 (transición T5 → T6) y en el cierre de todos los procedimientos. Por eso se retira TC-06 de la versión 0.4. | — |
 | R13, R14, R15 | Bajo | **Aceptar (excluido por tailoring)** | Fuera de alcance. Si en la ejecución se observa una respuesta > 2 s, se anota sin abrir incidente. | — |
 | R07 | Medio (proyecto) | **Mitigar con acciones** | Cada procedimiento se ejecuta completo en menos de 10 min y crea sus propios datos; los scripts reintentan una vez; si una reserva desaparece, se marca "Bloqueado", no "Falla". | — |
-| R18 | Medio (proyecto) | **Mitigar con acciones** | Reserva de 25,5 h concentrada en la semana 3 y revisión semanal del avance. | — |
-| R17 | Medio (proyecto) | **Mitigar con acciones** | *Spike* de 2 h de Playwright en la semana 1 y revisión de código por el Test Manager. | — |
+| R18 | Medio (proyecto) | **Mitigar con acciones** | La ejecución se adelantó a la semana 1; quedan 23 h para dos semanas con 7 h de reserva. | — |
+| R17 | Medio (proyecto) | **Mitigar con acciones** | Scripts verificados primero con un simulador local y luego en GitHub Actions (5 de 5 en verde el 19/11). | — |
 | R16 | Bajo (proyecto) | **Aceptar con acción preventiva de costo cero** | Apellidos únicos con marca de tiempo (`Prueba-{{sufijo}}`). | — |
-| R19 | Bajo (proyecto) | **Aceptar** | Si alguien se ausenta, sus casos los ejecuta otro analista con la reserva de horas. | — |
+| R19 | Medio (proyecto) | **Mitigar con acciones** | Todo está versionado en GitHub (plan, colección, scripts y evidencias): cualquier integrante puede retomar el trabajo, y GitHub Actions ejecuta la regresión sin depender de nadie. | — |
 
 **Resultado:** el 100 % de los riesgos Críticos y Altos (R08, R01, R02, R06) queda mitigado con casos de prueba.
 
@@ -445,7 +449,7 @@ Cobertura 0-switch: 6 de 6 transiciones válidas (100 %) y 2 transiciones invál
 
 ### 5.3 Generación de casos de prueba y trazabilidad
 
-**Volumen:** 22 casos = **17 manuales** + **5 automatizados**. Distribución por integrante: Susana 6, Luisa 6, Miguel 5, Santiago 5.
+**Volumen:** 22 casos = **17 manuales** + **5 automatizados**. Todos los diseñó Susana Romero.
 
 **Prioridad:** P1 para casos de riesgos Crítico y Alto; P2 para riesgos Medio.
 
@@ -478,13 +482,13 @@ Cobertura 0-switch: 6 de 6 transiciones válidas (100 %) y 2 transiciones invál
 |---|---|
 | Riesgo · Condición · Prioridad | R08 (Crítico) · CP-02 · P1 |
 | Técnica y origen de los datos | BVA de 3 valores, valor −1 noches (vecino inferior del límite inválido 0). Caso piloto de la versión 0.4. |
-| Diseña / Ejecuta | Susana Romero / Luisa Tamayo |
+| Diseña / Ejecuta | Susana Romero / Susana Romero |
 | Procedimiento | PROC-01 |
 | Precondiciones | `GET /ping` → 201. |
 | Entrada | `POST {{baseUrl}}/booking` con DAT-01, `lastname: "Prueba-{{sufijo}}-TC01"`, `checkin: "2026-12-10"`, `checkout: "2026-12-09"`. |
 | Resultado esperado | Rechazo (400). La respuesta no contiene `bookingid`. `GET /booking?firstname=Ana&lastname=Prueba-{{sufijo}}-TC01` devuelve `[]`. |
-| Resultado real | POST: 200 OK, bookingid 1515 | Verificación: 200, mismos datos |Pasa|
-| Estado / Incidente | |
+| Resultado real | POST → **200 OK** con `bookingid` 991: la API **aceptó** `checkout` 2026-12-09 anterior a `checkin` 2026-12-10. Verificación por apellido → `[{"bookingid": 991}]`: la reserva quedó guardada. Evidencia: [POST](evidencias/TC-01_20261120.png) · [verificación](evidencias/TC-01_verif_20261120.png) |
+| Estado / Incidente | ❌ Falla · [INC-01](registro-incidentes.md#inc-01) · Ejecutó: Susana Romero · 20/11/2026 · ⏳ Re-ejecución de PROC-01 pendiente (tarea 6.1) |
 
 ##### TC-02 · Crear una reserva de una noche (estadía mínima válida)
 
@@ -492,13 +496,13 @@ Cobertura 0-switch: 6 de 6 transiciones válidas (100 %) y 2 transiciones invál
 |---|---|
 | Riesgo · Condición · Prioridad | R08 (Crítico), R01 (Alto) · CP-02 · P1 |
 | Técnica y origen de los datos | BVA de 3 valores, valor +1 noche (primer valor de la clase válida). |
-| Diseña / Ejecuta | Susana Romero / Luisa Tamayo |
+| Diseña / Ejecuta | Susana Romero / Susana Romero |
 | Procedimiento | PROC-01 |
 | Precondiciones | `GET /ping` → 201. |
 | Entrada | `POST {{baseUrl}}/booking` con DAT-01, `lastname: "Prueba-{{sufijo}}-TC02"`, `checkin: "2026-12-10"`, `checkout: "2026-12-11"`. |
 | Resultado esperado | 200 con `bookingid` y `booking` igual a lo enviado. `GET /booking/{bookingid}` → 200 con los mismos datos. |
-| Resultado real | |
-| Estado / Incidente | |
+| Resultado real | POST → **200 OK** con `bookingid` 1515 y `booking` igual a lo enviado. Verificación `GET /booking/1515` → 200 con los mismos datos. Evidencia: [POST](evidencias/TC-02_20261119-1640.png) · [verificación](evidencias/TC-02_verif_20261119-1640.png) |
+| Estado / Incidente | ✅ Pasa · Ejecutó: Susana Romero · 19/11/2026 · ⏳ Re-ejecución de PROC-01 pendiente (tarea 6.1) |
 
 ##### TC-07 · Rechazar una reserva con 0 noches (entrada y salida el mismo día)
 
@@ -506,13 +510,13 @@ Cobertura 0-switch: 6 de 6 transiciones válidas (100 %) y 2 transiciones invál
 |---|---|
 | Riesgo · Condición · Prioridad | R08 (Crítico) · CP-02 · P1 |
 | Técnica y origen de los datos | BVA de 3 valores, valor 0 noches (límite de la clase inválida). |
-| Diseña / Ejecuta | Susana Romero / Luisa Tamayo |
+| Diseña / Ejecuta | Susana Romero / Susana Romero |
 | Procedimiento | PROC-01 |
 | Precondiciones | `GET /ping` → 201. |
 | Entrada | `POST {{baseUrl}}/booking` con DAT-01, `lastname: "Prueba-{{sufijo}}-TC07"`, `checkin: "2026-12-10"`, `checkout: "2026-12-10"`. |
 | Resultado esperado | Rechazo (400). Sin `bookingid`. El filtro por `lastname` devuelve `[]`. |
-| Resultado real | |
-| Estado / Incidente | |
+| Resultado real | POST → **200 OK** con `bookingid` 1907: la API **aceptó** `checkin` = `checkout` = 2026-12-10 (0 noches). Verificación por apellido → `[{"bookingid": 1907}]`. Evidencia: [POST](evidencias/TC-07_20261120.png) · [verificación](evidencias/TC-07_verif_20261120.png) |
+| Estado / Incidente | ❌ Falla · [INC-02](registro-incidentes.md#inc-02) · Ejecutó: Susana Romero · 20/11/2026 · ⏳ Re-ejecución de PROC-01 pendiente (tarea 6.1) |
 
 ##### TC-08 · Rechazar una reserva con precio negativo
 
@@ -520,13 +524,13 @@ Cobertura 0-switch: 6 de 6 transiciones válidas (100 %) y 2 transiciones invál
 |---|---|
 | Riesgo · Condición · Prioridad | R08 (Crítico) · CP-03 · P1 |
 | Técnica y origen de los datos | BVA de 2 valores, valor −1 (límite de la clase inválida `≤ −1`). |
-| Diseña / Ejecuta | Susana Romero / Luisa Tamayo |
+| Diseña / Ejecuta | Susana Romero / Susana Romero |
 | Procedimiento | PROC-01 |
 | Precondiciones | `GET /ping` → 201. |
 | Entrada | `POST {{baseUrl}}/booking` con DAT-01, `lastname: "Prueba-{{sufijo}}-TC08"`, `totalprice: -1`. |
 | Resultado esperado | Rechazo (400). Sin `bookingid`. El filtro por `lastname` devuelve `[]`. |
-| Resultado real | |
-| Estado / Incidente | |
+| Resultado real | POST → **200 OK** con `bookingid` 2766 y `totalprice: -1` guardado. Verificación por apellido → `[{"bookingid": 2766}]`. Evidencia: [POST](evidencias/TC-08_20261120.png) · [verificación](evidencias/TC-08_verif_20261120.png) |
+| Estado / Incidente | ❌ Falla · [INC-03](registro-incidentes.md#inc-03) · Ejecutó: Susana Romero · 20/11/2026 · ⏳ Re-ejecución de PROC-01 pendiente (tarea 6.1) |
 
 ##### TC-09 · Crear una reserva con precio 0
 
@@ -534,13 +538,13 @@ Cobertura 0-switch: 6 de 6 transiciones válidas (100 %) y 2 transiciones invál
 |---|---|
 | Riesgo · Condición · Prioridad | R08 (Crítico), R01 (Alto) · CP-03 · P1 |
 | Técnica y origen de los datos | BVA de 2 valores, valor 0 (límite de la clase válida `≥ 0`). |
-| Diseña / Ejecuta | Susana Romero / Luisa Tamayo |
+| Diseña / Ejecuta | Susana Romero / Susana Romero |
 | Procedimiento | PROC-01 |
 | Precondiciones | `GET /ping` → 201. |
 | Entrada | `POST {{baseUrl}}/booking` con DAT-01, `lastname: "Prueba-{{sufijo}}-TC09"`, `totalprice: 0`. |
 | Resultado esperado | 200 con `bookingid`; `GET /booking/{bookingid}` muestra `totalprice: 0` y el resto igual a lo enviado. |
-| Resultado real | |
-| Estado / Incidente | |
+| Resultado real | POST → **200 OK** con `bookingid` y `totalprice: 0`. Verificación `GET /booking/{id}` → 200 con `totalprice: 0` y el resto igual. *Observación: la captura del POST corresponde al envío del 19/11 (sufijo distinto al de la verificación); retomar en la re-ejecución.* Evidencia: [POST](evidencias/TC-09_20261120.png) · [verificación](evidencias/TC-09_verif_20261120.png) |
+| Estado / Incidente | ✅ Pasa · Ejecutó: Susana Romero · 20/11/2026 · ⏳ Re-ejecución de PROC-01 pendiente (tarea 6.1) |
 
 ##### TC-10 · Rechazar una reserva con precio no numérico
 
@@ -548,13 +552,13 @@ Cobertura 0-switch: 6 de 6 transiciones válidas (100 %) y 2 transiciones invál
 |---|---|
 | Riesgo · Condición · Prioridad | R08 (Crítico) · CP-03 · P1 |
 | Técnica y origen de los datos | EP, representante de la clase inválida "tipo no numérico". |
-| Diseña / Ejecuta | Susana Romero / Luisa Tamayo |
+| Diseña / Ejecuta | Susana Romero / Susana Romero |
 | Procedimiento | PROC-01 |
 | Precondiciones | `GET /ping` → 201. |
 | Entrada | `POST {{baseUrl}}/booking` con DAT-01, `lastname: "Prueba-{{sufijo}}-TC10"`, `totalprice: "cien"`. |
 | Resultado esperado | Rechazo (400). Sin `bookingid`. El filtro por `lastname` devuelve `[]`. |
-| Resultado real | |
-| Estado / Incidente | |
+| Resultado real | POST → **200 OK** con `bookingid` 3364: la API **aceptó** `totalprice: "cien"` y lo guardó como **`null`** (se pierde el precio). Verificación por apellido → encontró una reserva con ese apellido (`bookingid` 856; el ID distinto indica que el POST se reenvió tras un reinicio de la instancia, R07). Evidencia: [POST](evidencias/TC-10_20261120.png) · [verificación](evidencias/TC-10_verif_20261120.png) |
+| Estado / Incidente | ❌ Falla · [INC-04](registro-incidentes.md#inc-04) · Ejecutó: Susana Romero · 20/11/2026 · ⏳ Re-ejecución de PROC-01 pendiente (tarea 6.1) |
 
 ##### TC-11 · Rechazar una reserva sin un campo obligatorio
 
@@ -562,13 +566,13 @@ Cobertura 0-switch: 6 de 6 transiciones válidas (100 %) y 2 transiciones invál
 |---|---|
 | Riesgo · Condición · Prioridad | R08 (Crítico) · CP-04 · P1 |
 | Técnica y origen de los datos | EP, representante de la clase inválida "falta un campo obligatorio" (se elige `lastname`). |
-| Diseña / Ejecuta | Luisa Tamayo / Susana Romero |
+| Diseña / Ejecuta | Susana Romero / Susana Romero |
 | Procedimiento | PROC-02 |
 | Precondiciones | `GET /ping` → 201. |
 | Entrada | `POST {{baseUrl}}/booking` con DAT-01 **sin** la propiedad `lastname` y con `firstname: "Ana-{{sufijo}}-TC11"`. |
 | Resultado esperado | Rechazo **400** con un mensaje que indique el campo faltante (un 500 se registra como incidente de R10). Sin `bookingid`. `GET /booking?firstname=Ana-{{sufijo}}-TC11` → `[]`. |
-| Resultado real | |
-| Estado / Incidente | |
+| Resultado real | POST → **500 Internal Server Error**, sin `bookingid`. Verificación por nombre → `[]`: no se creó nada. El rechazo cumple R08, pero el código debió ser 400 (R10). Evidencia: [POST](evidencias/TC-11_20261120.png) · [verificación](evidencias/TC-11_verif_20261120.png) |
+| Estado / Incidente | ✅ Pasa (R08) · [INC-05](registro-incidentes.md#inc-05) por R10 · Ejecutó: Susana Romero · 20/11/2026 |
 
 ##### TC-12 · Rechazar una creación con Content-Type distinto de JSON
 
@@ -576,13 +580,13 @@ Cobertura 0-switch: 6 de 6 transiciones válidas (100 %) y 2 transiciones invál
 |---|---|
 | Riesgo · Condición · Prioridad | R08 (Crítico) · CP-04 · P1 |
 | Técnica y origen de los datos | EP, representante de la clase inválida "Content-Type no JSON" (`text/plain`). |
-| Diseña / Ejecuta | Luisa Tamayo / Susana Romero |
+| Diseña / Ejecuta | Susana Romero / Susana Romero |
 | Procedimiento | PROC-02 |
 | Precondiciones | `GET /ping` → 201. |
 | Entrada | `POST {{baseUrl}}/booking` con encabezado `Content-Type: text/plain` y como texto el contenido de DAT-01 con `lastname: "Prueba-{{sufijo}}-TC12"`. |
 | Resultado esperado | Rechazo 4xx (415 o 400). Sin `bookingid`. El filtro por `lastname` devuelve `[]`. |
-| Resultado real | |
-| Estado / Incidente | |
+| Resultado real | POST con `Content-Type: text/plain` → **500 Internal Server Error**, sin `bookingid`. Verificación por apellido → `[]`. El rechazo cumple R08, pero el código debió ser 415 o 400 (R10). Evidencia: [POST](evidencias/TC-12_20261120.png) · [verificación](evidencias/TC-12_verif_20261120.png) |
+| Estado / Incidente | ✅ Pasa (R08) · [INC-06](registro-incidentes.md#inc-06) por R10 · Ejecutó: Susana Romero · 20/11/2026 |
 
 ##### TC-13 · Rechazar una reserva con una fecha de entrada inexistente
 
@@ -590,13 +594,13 @@ Cobertura 0-switch: 6 de 6 transiciones válidas (100 %) y 2 transiciones invál
 |---|---|
 | Riesgo · Condición · Prioridad | R08 (Crítico) · CP-05 · P1 |
 | Técnica y origen de los datos | EP, representante de la clase inválida "formato correcto, fecha inexistente" (30 de febrero). |
-| Diseña / Ejecuta | Luisa Tamayo / Susana Romero |
+| Diseña / Ejecuta | Susana Romero / Susana Romero |
 | Procedimiento | PROC-02 |
 | Precondiciones | `GET /ping` → 201. |
 | Entrada | `POST {{baseUrl}}/booking` con DAT-01, `lastname: "Prueba-{{sufijo}}-TC13"`, `checkin: "2026-02-30"`, `checkout: "2026-03-05"`. |
 | Resultado esperado | Rechazo (400). Sin `bookingid`. Si la API la acepta, registrar qué fecha guardó (p. ej., si la convirtió en 2026-03-02). |
-| Resultado real | |
-| Estado / Incidente | |
+| Resultado real | POST → **200 OK** con `bookingid` 3693: la API **aceptó** `checkin` 2026-02-30 y lo guardó **cambiado** a `2026-03-02` sin avisar. Verificación por apellido → `[{"bookingid": 3693}]`. Evidencia: [POST](evidencias/TC-13_20261120.png) · [verificación](evidencias/TC-13_verif_20261120.png) |
+| Estado / Incidente | ❌ Falla · [INC-07](registro-incidentes.md#inc-07) · Ejecutó: Susana Romero · 20/11/2026 |
 
 ##### TC-03 · Modificar todos los datos de una reserva con token válido
 
@@ -604,13 +608,13 @@ Cobertura 0-switch: 6 de 6 transiciones válidas (100 %) y 2 transiciones invál
 |---|---|
 | Riesgo · Condición · Prioridad | R02 (Alto) · CP-06 · P1 |
 | Técnica y origen de los datos | EP: clase válida de cuerpo (completo) combinada con clase válida de autorización (Cookie con token vigente). |
-| Diseña / Ejecuta | Miguel Vallejo / Susana Romero |
+| Diseña / Ejecuta | Susana Romero / Susana Romero |
 | Procedimiento | PROC-03 |
 | Precondiciones | Token obtenido con `POST /auth`; reserva base creada en la preparación de PROC-03 (`{{bookingid}}`). |
 | Entrada | `PUT {{baseUrl}}/booking/{{bookingid}}` con `Cookie: token={{token}}` y DAT-01 cambiando `totalprice: 180` y `depositpaid: false`. |
 | Resultado esperado | 200 con los datos nuevos. `GET /booking/{{bookingid}}` muestra `totalprice: 180`, `depositpaid: false` y los demás campos sin cambio. |
-| Resultado real | |
-| Estado / Incidente | |
+| Resultado real | PUT → **200 OK** con `totalprice: 180` y `depositpaid: false`. Verificación → 200 con `totalprice: 180`, `depositpaid: false` y los demás campos sin cambio. Evidencia: [PUT](evidencias/TC-03_20261120.png) · [verificación](evidencias/TC-03_verif_20261120.png) |
+| Estado / Incidente | ✅ Pasa · Ejecutó: Susana Romero · 20/11/2026 |
 
 ##### TC-14 · Rechazar una modificación total con cuerpo incompleto
 
@@ -618,13 +622,13 @@ Cobertura 0-switch: 6 de 6 transiciones válidas (100 %) y 2 transiciones invál
 |---|---|
 | Riesgo · Condición · Prioridad | R02 (Alto) · CP-07 · P1 |
 | Técnica y origen de los datos | EP, representante de la clase inválida "cuerpo de PUT incompleto" (sin `bookingdates`). |
-| Diseña / Ejecuta | Miguel Vallejo / Susana Romero |
+| Diseña / Ejecuta | Susana Romero / Susana Romero |
 | Procedimiento | PROC-03 |
 | Precondiciones | Token vigente; reserva `{{bookingid}}` en el estado que dejó TC-03. |
 | Entrada | `PUT {{baseUrl}}/booking/{{bookingid}}` con `Cookie: token={{token}}` y el cuerpo de TC-03 **sin** `bookingdates`. |
 | Resultado esperado | Rechazo 400. `GET /booking/{{bookingid}}` devuelve exactamente lo mismo que después de TC-03. |
-| Resultado real | |
-| Estado / Incidente | |
+| Resultado real | PUT sin `bookingdates` → **400 Bad Request**. Verificación → 200 con `totalprice: 180` y `depositpaid: false`: la reserva no cambió. Evidencia: [PUT](evidencias/TC-14_20261120.png) · [verificación](evidencias/TC-14_verif_20261120.png) |
+| Estado / Incidente | ✅ Pasa · Ejecutó: Susana Romero · 20/11/2026 |
 
 ##### TC-15 · Rechazar una modificación sin autorización
 
@@ -632,13 +636,13 @@ Cobertura 0-switch: 6 de 6 transiciones válidas (100 %) y 2 transiciones invál
 |---|---|
 | Riesgo · Condición · Prioridad | R06 (Alto) · CP-08 · P1 |
 | Técnica y origen de los datos | EP, representante de la clase inválida "sin autorización" (ni Cookie ni Authorization). |
-| Diseña / Ejecuta | Miguel Vallejo / Susana Romero |
+| Diseña / Ejecuta | Susana Romero / Susana Romero |
 | Procedimiento | PROC-03 |
 | Precondiciones | Reserva `{{bookingid}}` activa. |
 | Entrada | `PUT {{baseUrl}}/booking/{{bookingid}}` **sin** Cookie ni Authorization, con DAT-01 cambiando `totalprice: 999`. |
 | Resultado esperado | 403. `GET /booking/{{bookingid}}` no muestra `totalprice: 999`. |
-| Resultado real | |
-| Estado / Incidente | |
+| Resultado real | PUT sin autorización → **403 Forbidden**. Verificación → 200 con `totalprice: 150` (no 999): la reserva no cambió. Evidencia: [PUT](evidencias/TC-15_20261120.png) · [verificación](evidencias/TC-15_verif_20261120.png) |
+| Estado / Incidente | ✅ Pasa · Ejecutó: Susana Romero · 20/11/2026 |
 
 ##### TC-16 · Rechazar una modificación con un token inventado
 
@@ -646,13 +650,13 @@ Cobertura 0-switch: 6 de 6 transiciones válidas (100 %) y 2 transiciones invál
 |---|---|
 | Riesgo · Condición · Prioridad | R06 (Alto) · CP-08 · P1 |
 | Técnica y origen de los datos | EP, representante de la clase inválida "Cookie con token no emitido por la API". |
-| Diseña / Ejecuta | Miguel Vallejo / Susana Romero |
+| Diseña / Ejecuta | Susana Romero / Susana Romero |
 | Procedimiento | PROC-03 |
 | Precondiciones | Reserva `{{bookingid}}` activa. |
 | Entrada | `PUT {{baseUrl}}/booking/{{bookingid}}` con `Cookie: token=abc123invalido` y DAT-01 cambiando `totalprice: 999`. |
 | Resultado esperado | 403. La reserva no cambia. |
-| Resultado real | |
-| Estado / Incidente | |
+| Resultado real | PUT con `Cookie: token=abc123invalido` → **403 Forbidden**. Verificación → 200 con `totalprice: 150` (no 999). Evidencia: [PUT](evidencias/TC-16_20261120.png) · [verificación](evidencias/TC-16_verif_20261120.png) |
+| Estado / Incidente | ✅ Pasa · Ejecutó: Susana Romero · 20/11/2026 |
 
 ##### TC-18 · No emitir token con una contraseña incorrecta
 
@@ -660,13 +664,13 @@ Cobertura 0-switch: 6 de 6 transiciones válidas (100 %) y 2 transiciones invál
 |---|---|
 | Riesgo · Condición · Prioridad | R06 (Alto) · CP-09 · P1 |
 | Técnica y origen de los datos | EP, representante de la clase inválida "contraseña incorrecta para un usuario existente". |
-| Diseña / Ejecuta | Miguel Vallejo / Susana Romero |
+| Diseña / Ejecuta | Susana Romero / Susana Romero |
 | Procedimiento | PROC-03 |
 | Precondiciones | Ninguna. |
 | Entrada | `POST {{baseUrl}}/auth` con `{"username": "admin", "password": "clave-incorrecta"}`. |
 | Resultado esperado | La respuesta **no** contiene la propiedad `token` (esto es lo que mitiga R06). Según RFC 9110 se espera 401; si responde 200 con un mensaje de error, se registra un incidente menor de R10. |
-| Resultado real | |
-| Estado / Incidente | |
+| Resultado real | POST /auth → **200 OK** con `{"reason": "Bad credentials"}` y **sin** `token`: R06 mitigado. El código debió ser 401 (R10). Evidencia: [POST](evidencias/TC-18_20261120.png) |
+| Estado / Incidente | ✅ Pasa (R06) · [INC-08](registro-incidentes.md#inc-08) por R10 · Ejecutó: Susana Romero · 20/11/2026 |
 
 ##### TC-04 · Consultar una reserva existente
 
@@ -674,13 +678,13 @@ Cobertura 0-switch: 6 de 6 transiciones válidas (100 %) y 2 transiciones invál
 |---|---|
 | Riesgo · Condición · Prioridad | R03 (Medio) · CP-11 · P2 |
 | Técnica y origen de los datos | EP, representante de la clase válida "ID existente". |
-| Diseña / Ejecuta | Luisa Tamayo / Susana Romero |
+| Diseña / Ejecuta | Susana Romero / Susana Romero |
 | Procedimiento | PROC-04 |
 | Precondiciones | Reserva base creada en la preparación de PROC-04 con DAT-01 (`{{bookingid}}`). |
 | Entrada | `GET {{baseUrl}}/booking/{{bookingid}}`. |
 | Resultado esperado | 200. El JSON contiene `firstname`, `lastname`, `totalprice`, `depositpaid`, `bookingdates` y `additionalneeds` con los mismos valores registrados. |
-| Resultado real | |
-| Estado / Incidente | |
+| Resultado real | GET → **200 OK** con `firstname`, `lastname`, `totalprice: 150`, `depositpaid: true`, `bookingdates` y `additionalneeds` iguales a los registrados. Evidencia: [GET](evidencias/TC-04_20261120.png) |
+| Estado / Incidente | ✅ Pasa · Ejecutó: Susana Romero · 20/11/2026 |
 
 ##### TC-17 · Consultar una reserva que no existe
 
@@ -688,13 +692,13 @@ Cobertura 0-switch: 6 de 6 transiciones válidas (100 %) y 2 transiciones invál
 |---|---|
 | Riesgo · Condición · Prioridad | R03 (Medio) · CP-11 · P2 |
 | Técnica y origen de los datos | EP, representante de la clase inválida "ID numérico no asignado" (`999999999`, muy por encima de los IDs que genera la instancia, que se reinicia cada 10 min). |
-| Diseña / Ejecuta | Luisa Tamayo / Susana Romero |
+| Diseña / Ejecuta | Susana Romero / Susana Romero |
 | Procedimiento | PROC-04 |
 | Precondiciones | `GET /ping` → 201. |
 | Entrada | `GET {{baseUrl}}/booking/999999999`. |
 | Resultado esperado | 404 sin datos de ninguna reserva. |
-| Resultado real | |
-| Estado / Incidente | |
+| Resultado real | GET `/booking/999999999` → **404 Not Found**, sin datos. Evidencia: [GET](evidencias/TC-17_20261120.png) |
+| Estado / Incidente | ✅ Pasa · Ejecutó: Susana Romero · 20/11/2026 |
 
 ##### TC-05 · Modificar solo el nombre de una reserva
 
@@ -702,13 +706,13 @@ Cobertura 0-switch: 6 de 6 transiciones válidas (100 %) y 2 transiciones invál
 |---|---|
 | Riesgo · Condición · Prioridad | R04 (Medio) · CP-12 · P2 |
 | Técnica y origen de los datos | EP, representante de la clase válida "cuerpo parcial con un solo campo". |
-| Diseña / Ejecuta | Luisa Tamayo / Susana Romero |
+| Diseña / Ejecuta | Susana Romero / Susana Romero |
 | Procedimiento | PROC-04 |
 | Precondiciones | Token vigente; reserva `{{bookingid}}` consultada en TC-04 (estado inicial conocido). |
 | Entrada | `PATCH {{baseUrl}}/booking/{{bookingid}}` con `Cookie: token={{token}}` y `{"firstname": "Ana Lucía"}`. |
 | Resultado esperado | 200. `GET /booking/{{bookingid}}`: solo `firstname` cambia a "Ana Lucía"; los demás campos son idénticos a los de TC-04. |
-| Resultado real | |
-| Estado / Incidente | |
+| Resultado real | PATCH → **200 OK**. Verificación → solo `firstname` cambió a "Ana Lucía"; los demás campos son idénticos a TC-04. Evidencia: [PATCH](evidencias/TC-05_20261120.png) · [verificación](evidencias/TC-05_verif_20261120.png) |
+| Estado / Incidente | ✅ Pasa · Ejecutó: Susana Romero · 20/11/2026 |
 
 #### 5.3.2 Casos automatizados
 
@@ -716,11 +720,11 @@ Regla de enlace: los casos automatizados **no describen pasos**. Cada uno enlaza
 
 | ID | Nombre | Riesgo · Condición · Prioridad | Técnica y origen de los datos | Programa / Revisa | Script |
 |---|---|---|---|---|---|
-| TC-19 | Crear una reserva válida persiste exactamente los datos enviados | R01 (Alto) · CP-01 · P1 | EP, representante de la clase válida (DAT-01 con apellido único). | Santiago Montoya / Miguel Vallejo | [flujos_criticos.spec.js#L63-L86](../tests/flujos_criticos.spec.js#L63-L86) |
-| TC-20 | Ciclo de vida completo de una reserva | R01, R02, R04, R06 (Alto/Medio) · CP-10 · P1 | ST, cobertura 0-switch de las transiciones T1 a T6. | Santiago Montoya / Miguel Vallejo | [flujos_criticos.spec.js#L88-L137](../tests/flujos_criticos.spec.js#L88-L137) |
-| TC-21 | Eliminar sin autorización se rechaza | R06 (Alto) · CP-08, CP-10 · P1 | ST, transición inválida I1; EP, clase "sin autorización". | Santiago Montoya / Miguel Vallejo | [flujos_criticos.spec.js#L139-L161](../tests/flujos_criticos.spec.js#L139-L161) |
-| TC-22 | Modificar una reserva eliminada se rechaza | R02 (Alto) · CP-10 · P1 | ST, transición inválida I2. | Santiago Montoya / Miguel Vallejo | [flujos_criticos.spec.js#L163-L185](../tests/flujos_criticos.spec.js#L163-L185) |
-| TC-23 | La autorización Basic solo permite modificar con credenciales válidas | R06 (Alto) · CP-08 · P1 | EP, clase válida y clase inválida de `Authorization: Basic`. | Santiago Montoya / Miguel Vallejo | [flujos_criticos.spec.js#L187-L223](../tests/flujos_criticos.spec.js#L187-L223) |
+| TC-19 | Crear una reserva válida persiste exactamente los datos enviados | R01 (Alto) · CP-01 · P1 | EP, representante de la clase válida (DAT-01 con apellido único). | Susana Romero / Susana Romero | [flujos_criticos.spec.js#L63-L86](../tests/flujos_criticos.spec.js#L63-L86) |
+| TC-20 | Ciclo de vida completo de una reserva | R01, R02, R04, R06 (Alto/Medio) · CP-10 · P1 | ST, cobertura 0-switch de las transiciones T1 a T6. | Susana Romero / Susana Romero | [flujos_criticos.spec.js#L88-L137](../tests/flujos_criticos.spec.js#L88-L137) |
+| TC-21 | Eliminar sin autorización se rechaza | R06 (Alto) · CP-08, CP-10 · P1 | ST, transición inválida I1; EP, clase "sin autorización". | Susana Romero / Susana Romero | [flujos_criticos.spec.js#L139-L161](../tests/flujos_criticos.spec.js#L139-L161) |
+| TC-22 | Modificar una reserva eliminada se rechaza | R02 (Alto) · CP-10 · P1 | ST, transición inválida I2. | Susana Romero / Susana Romero | [flujos_criticos.spec.js#L163-L185](../tests/flujos_criticos.spec.js#L163-L185) |
+| TC-23 | La autorización Basic solo permite modificar con credenciales válidas | R06 (Alto) · CP-08 · P1 | EP, clase válida y clase inválida de `Authorization: Basic`. | Susana Romero / Susana Romero | [flujos_criticos.spec.js#L187-L223](../tests/flujos_criticos.spec.js#L187-L223) |
 
 > **Por qué se automatizan estos 5 y no otros.** Son flujos de regresión críticos (creación, ciclo de vida, control de acceso) y estables: no dependen de reglas de validación no documentadas. Los casos de validación (TC-01, TC-07 a TC-13) quedan manuales porque es probable que revelen defectos y requieren interpretar cada respuesta.
 
@@ -730,11 +734,11 @@ Cada procedimiento se ejecuta completo en una sola sesión de menos de 10 minuto
 
 | ID | Prioridad | Objetivo | Preparación | Secuencia | Cierre | Ejecuta |
 |---|---|---|---|---|---|---|
-| PROC-01 | P1 | Validar las reglas de fechas y precio de la creación (R08, R01) | Ejecutar "00 Preparación" de la colección: `GET /ping` → 201 y generar `{{sufijo}}`. | TC-02 → TC-09 → TC-01 → TC-07 → TC-08 → TC-10 (primero los válidos, para confirmar que la API crea) | Obtener token y eliminar cada `bookingid` creado, **incluidos los que la API aceptó por error**. Anotar los IDs en el resultado real. | Luisa Tamayo |
+| PROC-01 | P1 | Validar las reglas de fechas y precio de la creación (R08, R01) | Ejecutar "00 Preparación" de la colección: `GET /ping` → 201 y generar `{{sufijo}}`. | TC-02 → TC-09 → TC-01 → TC-07 → TC-08 → TC-10 (primero los válidos, para confirmar que la API crea) | Obtener token y eliminar cada `bookingid` creado, **incluidos los que la API aceptó por error**. Anotar los IDs en el resultado real. | Susana Romero |
 | PROC-02 | P1 | Validar la estructura y el formato de la creación (R08) | Igual que PROC-01. | TC-11 → TC-12 → TC-13 | Igual que PROC-01. | Susana Romero |
 | PROC-03 | P1 | Validar modificación total y control de acceso (R02, R06) | `GET /ping`; `POST /auth` → `{{token}}`; crear reserva base con DAT-01 → `{{bookingid}}`. | TC-18 → TC-03 → TC-14 → TC-15 → TC-16 | `DELETE /booking/{{bookingid}}` con token; confirmar `GET` → 404. | Susana Romero |
 | PROC-04 | P2 | Validar consulta y modificación parcial (R03, R04) | `GET /ping`; `POST /auth`; crear reserva base con DAT-01. | TC-17 → TC-04 → TC-05 (se consulta antes de modificar para tener el estado inicial) | Igual que PROC-03. | Susana Romero |
-| PROC-05 | P1 | Regresión automatizada (R01, R02, R04, R06) | `npm install` (solo la primera vez). | `npm test` → TC-19 a TC-23 | Guardar `playwright-report/` como evidencia; los scripts limpian sus propios datos. | Santiago Montoya |
+| PROC-05 | P1 | Regresión automatizada (R01, R02, R04, R06) | `npm install` (solo la primera vez). | `npm test` → TC-19 a TC-23 | Guardar `playwright-report/` como evidencia; los scripts limpian sus propios datos. | Susana Romero |
 
 #### 5.3.4 Matriz de trazabilidad bidireccional
 
@@ -780,6 +784,47 @@ Cada procedimiento se ejecuta completo en una sola sesión de menos de 10 minuto
 
 **Verificación:** 22 casos, 0 casos huérfanos (todos tienen condición y riesgo), 100 % de los riesgos Críticos y Altos con al menos un caso. TC-06 no existe porque se retiró en la versión 1.0 (R05 aceptado); los IDs no se reutilizan para no romper la trazabilidad con las versiones anteriores.
 
+#### 5.3.5 Resumen de la ejecución del ciclo 1
+
+Ejecución del 19 y 20 de noviembre de 2026. El detalle de cada caso está en su ficha (5.3.1) y los incidentes en [`registro-incidentes.md`](registro-incidentes.md).
+
+| Procedimiento | Ejecutó | Casos | ✅ Pasan | ❌ Fallan | Incidentes |
+|---|---|---|---|---|---|
+| PROC-01 · Fechas y precio | Susana Romero | 6 | 2 (TC-02, TC-09) | 4 (TC-01, TC-07, TC-08, TC-10) | INC-01 a INC-04 |
+| PROC-02 · Estructura y formato | Susana Romero | 3 | 2 (TC-11, TC-12) | 1 (TC-13) | INC-05, INC-06, INC-07 |
+| PROC-03 · Modificación y autorización | Susana Romero | 5 | 5 | 0 | INC-08 |
+| PROC-04 · Consulta y modificación parcial | Susana Romero | 3 | 3 | 0 | — |
+| PROC-05 · Regresión automatizada | GitHub Actions (ejecución #1, 19/11/2026) | 5 | 5 | 0 | — |
+| **Total** | | **22** | **17** | **5** | **8** |
+
+**Cobertura por riesgo**
+
+| Riesgo | Nivel | Casos ejecutados | Resultado |
+|---|---|---|---|
+| R08 | 🟥 Crítico | 9 de 9 | 5 fallan: la API no valida fechas, precio ni formato de fecha. **Riesgo materializado.** |
+| R01 | 🟧 Alto | 4 de 4 | Pasan: una reserva válida se guarda tal cual se envía. |
+| R02 | 🟧 Alto | 4 de 4 | Pasan: `PUT` reemplaza bien y rechaza cuerpos incompletos. |
+| R06 | 🟧 Alto | 6 de 6 | Pasan: nada se modifica sin autorización válida. |
+| R03 | 🟨 Medio | 2 de 2 | Pasan. |
+| R04 | 🟨 Medio | 2 de 2 | Pasan: `PATCH` solo cambia el campo enviado. |
+| R10 | 🟨 Medio | (indirecto) | 3 incidentes de código HTTP incorrecto (INC-05, INC-06, INC-08). |
+
+**Estado de los criterios de finalización (5.5)**
+
+| # | Criterio | Estado |
+|---|---|---|
+| 1 | Casos P1 ejecutados | ✅ 19 de 19 |
+| 2 | Casos P2 ejecutados | ✅ 3 de 3 |
+| 3 | Valores límite y particiones de R08 | ✅ 100 % |
+| 4 | Riesgos Crítico y Alto con casos ejecutados | ✅ 4 de 4 |
+| 5 | Fallos con incidente registrado | ✅ 5 de 5 (más 3 de R10) |
+| 6 | Incidentes Críticos y Altos reproducidos | ⏳ Pendiente (re-test, semana 3) |
+| 7 | Independencia adaptada (2.3) | ✅ Resultados esperados versionados antes de ejecutar; ⏳ re-ejecución de PROC-01 en otra fecha (tarea 6.1), que también sirve como re-test de INC-01 a INC-04. |
+| 8 | Trazabilidad sin huérfanos | ✅ |
+| 9 | Scripts automatizados | ✅ 5 de 5 |
+
+**Observaciones de la ejecución:** en PROC-03 la preparación (`00`) se repitió entre casos, por lo que las verificaciones de TC-15 y TC-16 muestran una reserva base recién creada (`totalprice: 150`). El resultado es válido (no aparece el 999), pero en la re-ejecución conviene correr la preparación una sola vez. La captura del POST de TC-09 corresponde al envío del 19/11; se reemplaza en la re-ejecución de PROC-01.
+
 ### 5.4 Requisitos de entorno y datos de prueba
 
 **Entornos**
@@ -807,7 +852,7 @@ No se usan datos personales reales. Todos los datos son sintéticos y cada proce
 **Criterios de entrada (para empezar a ejecutar)**
 
 - Plan v1.0 en `main`, aprobado por el Test Manager.
-- 22 casos diseñados y con revisión cruzada.
+- 22 casos diseñados y autorrevisados.
 - `GET /ping` → 201 y `POST /auth` emite token.
 - Colección de Postman importada y `npm test` ejecutado al menos una vez (prueba de humo).
 
@@ -831,8 +876,8 @@ No se usan datos personales reales. Todos los datos son sintéticos y cada proce
 | 4 | Riesgos Crítico y Alto con al menos un caso ejecutado | 100 % (4 de 4) |
 | 5 | Fallos con incidente registrado en `docs/registro-incidentes.md` | 100 % |
 | 6 | Incidentes Críticos y Altos reproducidos en un segundo intento (re-test) | 100 % |
-| 7 | Independencia: ningún caso lo ejecuta quien lo diseñó | 100 % |
-| 8 | Trazabilidad bidireccional sin huérfanos | Verificada por el Test Manager |
+| 7 | Independencia adaptada (2.3): resultados esperados versionados en GitHub antes de ejecutar, captura por caso y re-ejecución de los casos fallidos en otra fecha | 100 % |
+| 8 | Trazabilidad bidireccional sin huérfanos | Verificada en la auditoría de trazabilidad (tarea 7.1) |
 | 9 | Scripts automatizados | 5 de 5 ejecutan; si alguno falla por un defecto real, tiene incidente asociado |
 
 > **Sobre "cero defectos abiertos".** Como la API es de un tercero (S-04), el equipo no puede corregir defectos. Por eso **no** se exige "0 defectos críticos abiertos", que haría imposible terminar. Se exige que cada defecto esté reportado, reproducido y declarado como **riesgo residual** en el informe de cierre.
@@ -843,56 +888,52 @@ No se usan datos personales reales. Todos los datos son sintéticos y cada proce
 
 ### 6.1 Desglose de tareas
 
-Iniciales: **MV** Miguel Vallejo (Test Manager) · **SR** Susana Romero (Analista) · **LT** Luisa Tamayo (Analista) · **SM** Santiago Montoya (Automatizador).
+Todas las tareas están a cargo de **SR** (Susana Romero García). Estado al 20/11/2026: ✅ hecha (con fecha) · ⏳ pendiente o en curso.
 
-| ID | Actividad | Resp. | Semana | Horas | Depende de |
-|---|---|---|---|---|---|
-| **1.0** | **Gestión de las pruebas** | | | **15,0** | |
-| 1.1 | Declaración de tailoring y contexto (secciones 1 a 3) | MV | S1 | 3,0 | — |
-| 1.2 | Matriz de riesgos v2.0 y tratamiento (sección 4) | MV | S1 | 3,0 | 1.1 |
-| 1.3 | WBS, roles y cronograma (secciones 6 a 8) | MV | S1 | 2,0 | 1.2 |
-| 1.4 | Seguimiento semanal (3 reuniones de 30 min × 4 personas) | Todos | S1–S3 | 6,0 | — |
-| 1.5 | Monitoreo y control: revisión del avance de la ejecución | MV | S2 | 1,0 | 5.1 |
-| **2.0** | **Preparación de entornos y datos** | | | **9,5** | |
-| 2.1 | Repositorio GitHub: estructura, ramas y reglas | MV | S1 | 1,5 | — |
-| 2.2 | Colección de Postman, variables y datos sintéticos | LT | S2 | 3,0 | 3.4 |
-| 2.3 | Proyecto Node + Playwright y prueba de humo | SM | S1 | 3,0 | 2.1 |
-| 2.4 | *Spike* de aprendizaje de Playwright para APIs (mitiga R17) | SM | S1 | 2,0 | 2.3 |
-| **3.0** | **Diseño documental de casos (Markdown)** | | | **26,0** | |
-| 3.1 | Derivación de CP-02 y CP-03 con BVA | SR | S1 | 2,0 | 1.2 |
-| 3.2 | Derivación de CP-04, CP-05, CP-11 y CP-12 con EP | LT | S1 | 1,5 | 1.2 |
-| 3.3 | Redacción de 6 casos manuales (TC-01, 02, 07, 08, 09, 10) | SR | S1 | 6,0 | 3.1 |
-| 3.4 | Redacción de 6 casos manuales (TC-11, 12, 13, 04, 17, 05) | LT | S1 | 6,0 | 3.2 |
-| 3.5 | Redacción de 5 casos manuales (TC-03, 14, 15, 16, 18) | MV | S2 | 5,0 | 1.2 |
-| 3.6 | Especificación de 5 casos automatizados y modelo de estados | SM | S1 | 2,5 | 1.2 |
-| 3.7 | Revisión cruzada de los casos de LT | SR | S1 | 1,0 | 3.4 |
-| 3.8 | Revisión cruzada de los casos de SR | LT | S1 | 1,0 | 3.3 |
-| 3.9 | Revisión de los casos de MV | SR | S2 | 1,0 | 3.5 |
-| **4.0** | **Programación de scripts de automatización** | | | **11,5** | |
-| 4.1 | Programación de TC-19 a TC-23 | SM | S2 | 8,0 | 2.3, 3.6 |
-| 4.2 | Revisión de código de los scripts | MV | S2 | 1,5 | 4.1 |
-| 4.3 | Depuración y estabilización | SM | S3 | 2,0 | 4.2 |
-| **5.0** | **Ejecución y reporte de incidentes** | | | **14,5** | |
-| 5.1 | PROC-01: ejecución de 6 casos | LT | S2 | 3,0 | 2.2, 3.3 |
-| 5.2 | PROC-02 y PROC-04: ejecución de 6 casos | SR | S2 | 3,0 | 2.2, 3.4 |
-| 5.3 | PROC-03: ejecución de 5 casos | SR | S2 | 2,5 | 2.2, 3.5 |
-| 5.4 | Reporte de incidentes de PROC-02, 03 y 04 | SR | S2 | 2,0 | 5.2, 5.3 |
-| 5.5 | Reporte de incidentes de PROC-01 | LT | S2 | 2,0 | 5.1 |
-| 5.6 | PROC-05: regresión automatizada y reporte HTML | SM | S3 | 1,0 | 4.3 |
-| 5.7 | Incidentes de los casos automatizados | SM | S3 | 1,0 | 5.6 |
-| **6.0** | **Re-test y regresión** | | | **5,0** | |
-| 6.1 | Re-test de incidentes y regresión manual (PROC-02 a 04) | SR | S3 | 2,5 | 5.4 |
-| 6.2 | Re-test de incidentes y regresión manual (PROC-01) | LT | S3 | 2,5 | 5.5 |
-| **7.0** | **Trazabilidad, cierre y release** | | | **13,0** | |
-| 7.1 | Verificación de trazabilidad de los casos propios | SR | S3 | 1,0 | 6.1 |
-| 7.2 | Verificación de trazabilidad de los casos propios | LT | S3 | 1,0 | 6.2 |
-| 7.3 | Auditoría interna de trazabilidad del plan completo | MV | S3 | 2,0 | 7.1, 7.2 |
-| 7.4 | Informe de cierre de pruebas | MV | S3 | 3,0 | 7.3 |
-| 7.5 | Correcciones finales al documento | SR | S3 | 1,5 | 7.3 |
-| 7.6 | Correcciones finales al documento | LT | S3 | 1,5 | 7.3 |
-| 7.7 | Enlaces Markdown ↔ scripts y README | SM | S3 | 1,0 | 5.6 |
-| 7.8 | Consolidación del release v1.0.0 (tag, PDF) | MV | S3 | 2,0 | 7.4 |
-| | **Total** | | | **94,5** | |
+| ID | Actividad | Resp. | Semana | Horas | Estado | Depende de |
+|---|---|---|---|---|---|---|
+| **1.0** | **Gestión de las pruebas** | | | **10,5** | | |
+| 1.1 | Declaración de tailoring y contexto (secciones 1 a 3) | SR | S1 | 3,0 | ✅ 17/11 | — |
+| 1.2 | Matriz de riesgos v2.0 y tratamiento (sección 4) | SR | S1 | 3,0 | ✅ 17/11 | 1.1 |
+| 1.3 | WBS, roles y cronograma (secciones 6 a 8) | SR | S1 | 2,0 | ✅ 17/11 | 1.2 |
+| 1.4 | Seguimiento semanal del avance (3 revisiones de 30 min) | SR | S1–S3 | 1,5 | ⏳ En curso | — |
+| 1.5 | Monitoreo y control: actualización del plan con resultados | SR | S1 | 1,0 | ✅ 20/11 | 5.5 |
+| **2.0** | **Preparación de entornos y datos** | | | **7,5** | | |
+| 2.1 | Repositorio GitHub: estructura, colaboradores y protección de `main` | SR | S1 | 1,5 | ✅ 19/11 | — |
+| 2.2 | Colección de Postman, variables y datos sintéticos | SR | S1 | 3,0 | ✅ 17/11 | 3.5 |
+| 2.3 | Proyecto Node + Playwright y ejecución en GitHub Actions | SR | S1 | 3,0 | ✅ 19/11 | 2.1 |
+| **3.0** | **Diseño documental de casos (Markdown)** | | | **24,5** | | |
+| 3.1 | Derivación de CP-02 y CP-03 con BVA | SR | S1 | 2,0 | ✅ 17/11 | 1.2 |
+| 3.2 | Derivación de CP-04, CP-05, CP-11 y CP-12 con EP | SR | S1 | 1,5 | ✅ 17/11 | 1.2 |
+| 3.3 | Redacción de TC-01, 02, 07, 08, 09 y 10 | SR | S1 | 6,0 | ✅ 17/11 | 3.1 |
+| 3.4 | Redacción de TC-11, 12, 13, 04, 17 y 05 | SR | S1 | 6,0 | ✅ 17/11 | 3.2 |
+| 3.5 | Redacción de TC-03, 14, 15, 16 y 18 | SR | S1 | 5,0 | ✅ 17/11 | 1.2 |
+| 3.6 | Especificación de 5 casos automatizados y modelo de estados | SR | S1 | 2,5 | ✅ 17/11 | 1.2 |
+| 3.7 | Autorrevisión de los 22 casos con lista de chequeo | SR | S2 | 1,5 | ⏳ Pendiente | 3.6 |
+| **4.0** | **Programación de scripts de automatización** | | | **11,5** | | |
+| 4.1 | Programación de TC-19 a TC-23 | SR | S1 | 8,0 | ✅ 17/11 | 2.3, 3.6 |
+| 4.2 | Revisión del código de los scripts | SR | S2 | 1,5 | ⏳ Pendiente | 4.1 |
+| 4.3 | Depuración y estabilización (si alguna corrida falla) | SR | S3 | 2,0 | ⏳ Pendiente | 4.2 |
+| **5.0** | **Ejecución y reporte de incidentes** | | | **13,5** | | |
+| 5.1 | PROC-01: ejecución de 6 casos | SR | S1 | 3,0 | ✅ 19–20/11 | 2.2, 3.3 |
+| 5.2 | PROC-02 y PROC-04: ejecución de 6 casos | SR | S1 | 3,0 | ✅ 20/11 | 2.2, 3.4 |
+| 5.3 | PROC-03: ejecución de 5 casos | SR | S1 | 2,5 | ✅ 20/11 | 2.2, 3.5 |
+| 5.4 | Reporte de incidentes de PROC-02 y PROC-03 (INC-05 a INC-08) | SR | S1 | 2,0 | ✅ 20/11 | 5.2, 5.3 |
+| 5.5 | Reporte de incidentes de PROC-01 (INC-01 a INC-04) | SR | S1 | 2,0 | ✅ 20/11 | 5.1 |
+| 5.6 | PROC-05: regresión automatizada y evidencia del reporte | SR | S1 | 1,0 | ✅ 19/11 | 2.3, 4.1 |
+| **6.0** | **Re-test y regresión** | | | **5,5** | | |
+| 6.1 | Re-ejecución de PROC-01 con capturas nuevas (re-test de INC-01 a INC-04) | SR | S2 | 2,5 | ⏳ Pendiente | 5.5 |
+| 6.2 | Re-test de INC-05 a INC-08 y regresión manual | SR | S2 | 2,5 | ⏳ Pendiente | 5.4 |
+| 6.3 | Regresión automatizada final | SR | S3 | 0,5 | ⏳ Pendiente | 4.3 |
+| **7.0** | **Trazabilidad, cierre y release** | | | **11,0** | | |
+| 7.1 | Auditoría de trazabilidad del plan completo | SR | S3 | 2,0 | ⏳ Pendiente | 6.1, 6.2 |
+| 7.2 | Informe de cierre de pruebas | SR | S3 | 3,0 | ⏳ Pendiente | 7.1 |
+| 7.3 | Correcciones finales al documento | SR | S3 | 3,0 | ⏳ Pendiente | 7.2 |
+| 7.4 | Enlaces Markdown ↔ scripts y README | SR | S3 | 1,0 | ⏳ Pendiente | 6.3 |
+| 7.5 | Consolidación del release v1.0.0 (tag, PDF) | SR | S3 | 2,0 | ⏳ Pendiente | 7.3 |
+| | **Total** | | | **84,0** | | |
+
+> Respecto a la versión 1.0 (94,5 h para 4 personas) se eliminaron las tareas que solo existían por coordinar a varias personas: la revisión cruzada entre analistas (reemplazada por la autorrevisión 3.7), las reuniones de seguimiento de 4 personas (reducidas en 1.4) y el *spike* de Playwright (no fue necesario).
 
 ### 6.2 Estimación de esfuerzo por actividad
 
@@ -902,32 +943,34 @@ Iniciales: **MV** Miguel Vallejo (Test Manager) · **SR** Susana Romero (Analist
 |---|---|---|
 | Diseñar un caso manual (incluye datos y redacción en Markdown) | 1,0 h | El caso piloto TC-01 tomó cerca de 1 h en el taller de especificación. |
 | Especificar un caso automatizado (sin pasos) | 0,5 h | Solo requiere técnica, datos y enlace. |
-| Programar un script | 1,6 h | 8 h / 5 scripts; incluye el tiempo oculto de *debugging* inicial. |
-| Ejecutar un caso manual con evidencia | 0,5 h | Enviar la solicitud, verificar con `GET`, capturar la evidencia y llenar la tabla. |
-| Reportar un incidente | 0,5 h | Se estiman 8 incidentes manuales (la mayoría de los 9 casos de validación de R08 podrían fallar) + 2 automatizados. |
+| Programar un script | 1,6 h | 8 h / 5 scripts; incluye el *debugging* inicial. |
+| Ejecutar un caso manual con evidencia | 0,5 h | Enviar la solicitud, verificar, capturar la evidencia y llenar la ficha. |
+| Reportar un incidente | 0,5 h | Se estimaron 8 incidentes; el ciclo 1 produjo exactamente 8. |
 
-**Comprobación de viabilidad (las cuentas cuadran en 3 semanas)**
+Las horas son **estimadas**, no horas registradas.
+
+**Comprobación de viabilidad**
 
 ```text
-Capacidad = 4 integrantes × 3 semanas × 10 h/semana = 120,0 h
-Esfuerzo planificado (WBS)                           =  94,5 h
-Reserva de contingencia = 120,0 − 94,5               =  25,5 h  (21,3 % de la capacidad)
+Esfuerzo total estimado (WBS)                         = 84,0 h
+Esfuerzo ya completado al 20/11 (semana 1)            = 61,0 h
+Esfuerzo pendiente                                    = 23,0 h
+
+Capacidad restante = 1 persona × 2 semanas × 15 h      = 30,0 h
+Reserva de contingencia = 30,0 − 23,0                 =  7,0 h  (23 % de la capacidad restante)
 ```
 
-**Carga por integrante y por semana** (máximo permitido: 10 h por semana)
+**Carga por semana** (Susana Romero)
 
-| Integrante | Rol | S1 | S2 | S3 | Total |
-|---|---|---|---|---|---|
-| Miguel Vallejo (MV) | Test Manager | 10,0 | 8,0 | 7,5 | 25,5 |
-| Susana Romero (SR) | Analista de pruebas | 9,5 | 9,0 | 5,5 | 24,0 |
-| Luisa Tamayo (LT) | Analista de pruebas | 9,0 | 8,5 | 5,5 | 23,0 |
-| Santiago Montoya (SM) | Automatizador | 8,0 | 8,5 | 5,5 | 22,0 |
-| **Total del equipo** | | **36,5** | **34,0** | **24,0** | **94,5** |
-| **Horas libres (reserva)** | | 3,5 | 6,0 | 16,0 | **25,5** |
+| Semana | Horas estimadas | Estado |
+|---|---|---|
+| S1 (16–22/11) | 61,5 | ✅ Completa: diseño, entorno, automatización y ejecución de los 22 casos se adelantaron a esta semana. |
+| S2 (23–29/11) | 8,5 | ⏳ Autorrevisión, revisión de código y re-tests. |
+| S3 (30/11–06/12) | 14,0 | ⏳ Estabilización, trazabilidad, informe de cierre y release. |
+| **Total** | **84,0** | |
 
-- Ningún integrante supera las 10 h en ninguna semana, y la diferencia entre el que más y el que menos trabaja es de 3,5 h.
-- La reserva se concentra en la semana 3 a propósito: es donde se materializan los riesgos R07 (re-ejecuciones por caídas del entorno) y R18 (retrasos acumulados).
-- Si la reserva se agota, el orden de recorte es: (1) la regresión manual de PROC-04 (P2); (2) TC-17 y TC-05 (riesgos Medios). Nunca se recortan casos P1.
+- La ejecución estaba prevista para la semana 2 y se realizó en la semana 1. Esa desviación es favorable: deja las semanas 2 y 3 con 23 h de trabajo y 7 h de reserva.
+- Si la reserva se agota, el orden de recorte es: (1) la regresión manual de PROC-04 (P2); (2) el re-test de INC-08 (severidad Baja). Nunca se recortan casos P1.
 
 ---
 
@@ -935,34 +978,26 @@ Reserva de contingencia = 120,0 − 94,5               =  25,5 h  (21,3 % de la 
 
 ### 7.1 Roles y responsabilidades de prueba
 
-| Rol | Integrante | Responsabilidades | Casos que diseña o programa | Casos que ejecuta |
-|---|---|---|---|---|
-| **Test Manager** | Miguel Angel Vallejo Giroldo | Declaración de tailoring; matriz de riesgos; coherencia de la trazabilidad; WBS y cronograma; arquitectura y reglas del repositorio; revisión de código; aprobación de *pull requests*; informe de cierre; release. | TC-03, TC-14, TC-15, TC-16, TC-18 (decisiones de autorización, por ser el riesgo de mayor responsabilidad del rol) | — (revisa el reporte de PROC-05) |
-| **Analista de pruebas 1** | Susana Romero García | Derivación de condiciones de fechas y precio con BVA; redacción en Markdown; revisión cruzada; ejecución independiente; reporte de incidentes. | TC-01, TC-02, TC-07, TC-08, TC-09, TC-10 | PROC-02, PROC-03, PROC-04 (11 casos) |
-| **Analista de pruebas 2** | Luisa Fernanda Tamayo Arias | Derivación de condiciones de estructura, consulta y modificación parcial con EP; colección de Postman; ejecución independiente; reporte de incidentes. | TC-11, TC-12, TC-13, TC-04, TC-17, TC-05 | PROC-01 (6 casos) |
-| **Ejecutor / Automatizador** | Santiago Montoya Restrepo | Configuración de Node y Playwright; modelo de estados; programación y estabilización de scripts; ejecución de la regresión; incidentes de los automatizados; enlaces Markdown ↔ código. | TC-19, TC-20, TC-21, TC-22, TC-23 | PROC-05 |
-
-**Matriz RACI de los entregables** (R = realiza, A = aprueba, C = consultado, I = informado)
-
-| Entregable | MV | SR | LT | SM | Docente |
-|---|---|---|---|---|---|
-| Declaración de tailoring (2.3) | R/A | C | C | C | I |
-| Matriz de riesgos (4) | R/A | C | C | C | I |
-| Condiciones y casos manuales (5.1–5.3.1) | A | R | R | C | I |
-| Scripts automatizados (5.3.2, `/tests`) | A | I | I | R | I |
-| Colección de Postman | A | C | R | I | — |
-| Ejecución y registro de incidentes | A | R | R | R | I |
-| Informe de cierre y release | R/A | C | C | C | A (aprobación final) |
-
-**Especialización temporal (para evitar que "todos hagan todo al mismo tiempo")**
-
-| Semana | Quién lleva la mayor carga | Por qué |
+| Rol | Integrante | Responsabilidades y trabajo realizado |
 |---|---|---|
-| S1 | Test Manager y analistas | Se define el plan y se diseñan los casos; el automatizador prepara el entorno y aprende la herramienta. |
-| S2 | Ejecutores (analistas cruzados) y automatizador | Se ejecutan los casos manuales y se programan los scripts. |
-| S3 | Test Manager | Trazabilidad final, informe de cierre y release; los demás hacen re-test y correcciones. |
+| **Analista de pruebas** | **Susana Romero García** | Realiza todas las tareas del ciclo: declaración de tailoring, matriz de riesgos v2.0, condiciones y técnicas, diseño de los 22 casos, colección de Postman, scripts de Playwright, repositorio GitHub y GitHub Actions, ejecución de PROC-01 a PROC-05, registro de los 8 incidentes y, pendiente, re-test, informe de cierre y release. |
+| **Test Manager** | Miguel Angel Vallejo Giroldo | Autor de las versiones 0.1 a 0.4 (inicio del plan, *test items*, matriz de riesgos v1.1, estrategia y casos TC-01 a TC-06). Firma de aprobación interna del plan (sección 1.3). |
+| **Analista de pruebas** | Luisa Fernanda Tamayo Arias | Sin tareas asignadas en este ciclo. |
+| **Automatizador** | Santiago Montoya Restrepo | Sin tareas asignadas en este ciclo. |
 
-**Reglas de independencia:** quien diseña un caso no lo ejecuta (Susana ↔ Luisa; los casos de Miguel los ejecuta Susana); los scripts de Santiago los revisa Miguel antes de entrar a `main`.
+**Matriz RACI de los entregables** (R = realiza, A = aprueba, I = informado)
+
+| Entregable | Susana Romero | Miguel Vallejo | Docente |
+|---|---|---|---|
+| Declaración de tailoring (2.3) | R | A (firma 1.3) | I |
+| Matriz de riesgos (4) | R | A (firma 1.3) | I |
+| Condiciones y casos manuales (5.1–5.3.1) | R | — | I |
+| Scripts automatizados (5.3.2, `/tests`) | R | — | I |
+| Colección de Postman | R | — | — |
+| Ejecución y registro de incidentes | R | — | I |
+| Informe de cierre y release | R | — | A (aprobación final) |
+
+**Independencia:** como una sola integrante diseña y ejecuta, la regla "quien diseña no ejecuta" se adaptó con controles compensatorios (sección 2.3).
 
 ---
 
@@ -970,7 +1005,7 @@ Reserva de contingencia = 120,0 − 94,5               =  25,5 h  (21,3 % de la 
 
 ### 8.1 Hitos y fechas de ejecución
 
-Ciclo de 3 semanas: **S1** del 16 al 22 de noviembre, **S2** del 23 al 29 de noviembre y **S3** del 30 de noviembre al 6 de diciembre de 2026.
+Ciclo de 3 semanas: **S1** del 16 al 22 de noviembre, **S2** del 23 al 29 de noviembre y **S3** del 30 de noviembre al 6 de diciembre de 2026. Las barras marcadas como `done` ya se completaron.
 
 ```mermaid
 gantt
@@ -978,30 +1013,30 @@ gantt
     dateFormat YYYY-MM-DD
     axisFormat %d/%m
     section Planificación y diseño
-    Tailoring, contexto y matriz de riesgos (1.1–1.3)   :a1, 2026-11-16, 4d
-    Repositorio, Node y Playwright (2.1, 2.3, 2.4)      :a2, 2026-11-16, 5d
-    Condiciones y casos SR/LT/SM (3.1–3.4, 3.6–3.8)      :a3, 2026-11-18, 5d
-    Casos de MV y su revisión (3.5, 3.9)                 :a4, 2026-11-21, 3d
+    Tailoring, contexto, riesgos y WBS (1.1–1.3)        :done, a1, 2026-11-16, 2d
+    Condiciones y 22 casos (3.1–3.6)                     :done, a2, 2026-11-16, 2d
+    Postman, scripts y repositorio (2.1–2.3, 4.1)        :done, a3, 2026-11-17, 3d
+    Autorrevisión de casos (3.7)                         :a4, 2026-11-23, 2d
     section Ejecución
-    Colección de Postman (2.2)                           :b1, 2026-11-23, 2d
-    Ejecución manual PROC-01 a PROC-04 (5.1–5.3)         :b2, 2026-11-25, 3d
-    Reporte de incidentes (5.4, 5.5)                     :b3, 2026-11-26, 3d
-    Programación y revisión de scripts (4.1, 4.2)        :b4, 2026-11-23, 7d
+    Regresión automatizada PROC-05 (5.6)                 :done, b1, 2026-11-19, 1d
+    Ejecución manual PROC-01 a PROC-04 (5.1–5.3)         :done, b2, 2026-11-19, 2d
+    Registro de incidentes (5.4, 5.5)                    :done, b3, 2026-11-20, 1d
+    Revisión de código (4.2)                             :b4, 2026-11-24, 2d
+    Re-ejecución de PROC-01 y re-tests (6.1, 6.2)        :b5, 2026-11-25, 3d
     section Cierre
-    Depuración y regresión automatizada (4.3, 5.6, 5.7)  :c1, 2026-11-30, 2d
-    Re-test y regresión manual (6.1, 6.2)                :c2, 2026-11-30, 3d
-    Trazabilidad e informe de cierre (7.1–7.4)           :c3, 2026-12-02, 2d
-    Correcciones y release v1.0.0 (7.5–7.8)              :c4, 2026-12-03, 2d
-    Reserva de contingencia                              :c5, 2026-12-05, 2d
+    Estabilización y regresión final (4.3, 6.3)          :c1, 2026-11-30, 2d
+    Trazabilidad e informe de cierre (7.1, 7.2)          :c2, 2026-12-01, 2d
+    Correcciones y release v1.0.0 (7.3–7.5)              :c3, 2026-12-03, 2d
+    Reserva de contingencia                              :c4, 2026-12-05, 2d
 ```
 
-| Hito | Fecha | Criterio de cumplimiento | Evidencia en GitHub |
+| Hito | Fecha | Criterio de cumplimiento | Estado |
 |---|---|---|---|
-| H1 | Jue 19/11/2026 | Secciones 1 a 4 (tailoring y matriz de riesgos) aprobadas por el Test Manager | *Pull request* aprobado |
-| H2 | Lun 23/11/2026 | 22 casos diseñados con revisión cruzada; plan listo para revisión del docente | Tag `v0.9.0-diseno` |
-| H3 | Mié 25/11/2026 | Criterios de entrada cumplidos: Postman importado y prueba de humo de `npm test` | *Commit* de la colección y del reporte de humo |
-| H4 | Sáb 28/11/2026 | Ciclo 1 de ejecución manual completo e incidentes registrados | `docs/registro-incidentes.md` actualizado |
-| H5 | Dom 29/11/2026 | Scripts TC-19 a TC-23 en `main`, revisados | *Pull request* aprobado |
-| H6 | Mié 02/12/2026 | Re-test y regresión completos; criterios de finalización evaluados | Resultados reales en la sección 5.3 |
-| H7 | Vie 04/12/2026 | Release `v1.0.0` publicado: plan, resultados, incidentes e informe de cierre en Markdown y PDF | Release de GitHub |
+| H1 | Jue 19/11/2026 | Secciones 1 a 4 aprobadas (firma del Test Manager) | ✅ 19/11 |
+| H2 | Lun 23/11/2026 | 22 casos diseñados y autorrevisados; tag `v0.9.0-diseno` y aviso al docente | ⏳ |
+| H3 | Mié 25/11/2026 | Criterios de entrada: Postman importado y regresión automatizada en verde | ✅ 19/11 (adelantado) |
+| H4 | Sáb 28/11/2026 | Ciclo 1 de ejecución manual completo e incidentes registrados | ✅ 20/11 (adelantado) |
+| H5 | Dom 29/11/2026 | Scripts TC-19 a TC-23 en `main` | ✅ 19/11 (adelantado) |
+| H6 | Mié 02/12/2026 | Re-tests completos y criterios de finalización evaluados | ⏳ |
+| H7 | Vie 04/12/2026 | Release `v1.0.0`: plan, resultados, incidentes e informe de cierre en Markdown y PDF | ⏳ |
 | — | 05–06/12/2026 | Reserva de contingencia (no planificada) | — |
