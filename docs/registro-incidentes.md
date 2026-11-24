@@ -20,7 +20,7 @@
 
 ## Resumen del ciclo 1 (19 y 20 de noviembre de 2026)
 
-INC-01 a INC-04 se reprodujeron en una segunda sesión independiente (20/11/2026, 16:16). INC-05 a INC-08 tienen el re-test pendiente (tarea 6.2).
+INC-01 a INC-04 se reprodujeron en una segunda sesión independiente el 20/11/2026 (16:16), e INC-05 a INC-07 el 24/11/2026 (09:37). El re-test de INC-08 (severidad Baja) quedó pospuesto.
 
 | ID | Caso | Riesgo | Título | Severidad | Oráculo | Estado |
 |---|---|---|---|---|---|---|
@@ -28,9 +28,9 @@ INC-01 a INC-04 se reprodujeron en una segunda sesión independiente (20/11/2026
 | [INC-02](#inc-02) | TC-07 | R08 | Se acepta una reserva de 0 noches | Alta | REGLA | Reproducido |
 | [INC-03](#inc-03) | TC-08 | R08 | Se acepta un precio total negativo | Alta | REGLA | Reproducido |
 | [INC-04](#inc-04) | TC-10 | R08 | Un precio no numérico se acepta y se guarda como `null` | Alta | DOC | Reproducido |
-| [INC-05](#inc-05) | TC-11 | R10 | Falta de un campo obligatorio responde 500 en lugar de 400 | Media | HTTP | Abierto |
-| [INC-06](#inc-06) | TC-12 | R10 | `Content-Type` no JSON responde 500 en lugar de 415/400 | Media | HTTP | Abierto |
-| [INC-07](#inc-07) | TC-13 | R08 | Una fecha inexistente se acepta y se guarda cambiada | Alta | REGLA | Abierto |
+| [INC-05](#inc-05) | TC-11 | R10 | Falta de un campo obligatorio responde 500 en lugar de 400 | Media | HTTP | Reproducido |
+| [INC-06](#inc-06) | TC-12 | R10 | `Content-Type` no JSON responde 500 en lugar de 415/400 | Media | HTTP | Reproducido |
+| [INC-07](#inc-07) | TC-13 | R08 | Una fecha inexistente se acepta y se guarda cambiada | Alta | REGLA | Reproducido |
 | [INC-08](#inc-08) | TC-18 | R10 | Credenciales inválidas responden 200 en lugar de 401 | Baja | HTTP | Abierto |
 
 **Lectura:** la API **no valida** las reglas de negocio de la creación (R08, Crítico): de los 9 casos de R08, 5 fallaron porque la reserva inválida quedó guardada. El control de acceso (R06) se comportó bien: no se modificó nada sin autorización y no se emitió token con credenciales inválidas. Los 3 incidentes de R10 son de forma: la API rechaza, pero con el código HTTP equivocado.
@@ -135,8 +135,8 @@ INC-01 a INC-04 se reprodujeron en una segunda sesión independiente (20/11/2026
 | Resultado obtenido | `500 Internal Server Error` con el texto "Internal Server Error". No se creó la reserva (verificación → `[]`), así que **R08 queda mitigado**. |
 | Pasos para reproducir | 1. `00 Preparación` de PROC-02. 2. `TC-11 · POST /booking sin lastname`. 3. `TC-11 · Verificación por nombre`. |
 | Evidencia | [POST](evidencias/TC-11_20261120.png) · [verificación](evidencias/TC-11_verif_20261120.png) |
-| Re-test | Pendiente (semana 3). |
-| Estado | Abierto |
+| Re-test | ✅ Reproducido el 24/11/2026 a las 09:37 en una sesión independiente: `500 Internal Server Error`, sin `bookingid`; verificación → `[]`. Evidencia: [POST](evidencias/TC-11_rerun_20261124-0937.png) · [verificación](evidencias/TC-11_rerun_verif_20261124-0937.png) |
+| Estado | Reproducido → riesgo residual |
 | Riesgo residual | El cliente no sabe qué corrigió mal; un 500 sugiere que el servidor no maneja la validación y podría fallar con otras entradas incompletas. |
 
 <a id="inc-06"></a>
@@ -155,8 +155,8 @@ INC-01 a INC-04 se reprodujeron en una segunda sesión independiente (20/11/2026
 | Resultado obtenido | `500 Internal Server Error`. No se creó la reserva (verificación → `[]`), así que **R08 queda mitigado**. |
 | Pasos para reproducir | 1. `00 Preparación` de PROC-02. 2. `TC-12 · POST /booking con Content-Type text/plain`. 3. `TC-12 · Verificación por apellido`. |
 | Evidencia | [POST](evidencias/TC-12_20261120.png) · [verificación](evidencias/TC-12_verif_20261120.png) |
-| Re-test | Pendiente (semana 3). |
-| Estado | Abierto |
+| Re-test | ✅ Reproducido el 24/11/2026 a las 09:37 en una sesión independiente: `500 Internal Server Error`, sin `bookingid`; verificación → `[]`. Evidencia: [POST](evidencias/TC-12_rerun_20261124-0937.png) · [verificación](evidencias/TC-12_rerun_verif_20261124-0937.png) |
+| Estado | Reproducido → riesgo residual |
 | Riesgo residual | Mismo patrón que INC-05: la API no distingue entre un error del cliente y uno propio. |
 
 <a id="inc-07"></a>
@@ -175,8 +175,8 @@ INC-01 a INC-04 se reprodujeron en una segunda sesión independiente (20/11/2026
 | Resultado obtenido | `200 OK` con `bookingid` 3693 y **`checkin: "2026-03-02"`**: la API convirtió el 30 de febrero en el 2 de marzo sin avisar. |
 | Pasos para reproducir | 1. `00 Preparación` de PROC-02. 2. `TC-13 · POST /booking con fecha 2026-02-30`. 3. `TC-13 · Verificación por apellido`. |
 | Evidencia | [POST](evidencias/TC-13_20261120.png) · [verificación](evidencias/TC-13_verif_20261120.png) |
-| Re-test | Pendiente (semana 3). |
-| Estado | Abierto |
+| Re-test | ✅ Reproducido el 24/11/2026 a las 09:37 en una sesión independiente: `200 OK` con `bookingid` 5269 y `checkin` guardado como `2026-03-02`. Evidencia: [POST](evidencias/TC-13_rerun_20261124-0937.png) · [verificación](evidencias/TC-13_rerun_verif_20261124-0937.png) |
+| Estado | Reproducido → riesgo residual |
 | Riesgo residual | La reserva queda guardada con una fecha distinta a la que pidió el cliente, sin que este se entere. |
 
 <a id="inc-08"></a>
@@ -195,6 +195,6 @@ INC-01 a INC-04 se reprodujeron en una segunda sesión independiente (20/11/2026
 | Resultado obtenido | `200 OK` con `{"reason": "Bad credentials"}` y **sin** `token`. El control de acceso (**R06**) funciona; solo el código es incorrecto. |
 | Pasos para reproducir | 1. Enviar `TC-18 · POST /auth con contraseña incorrecta` de PROC-03. |
 | Evidencia | [POST](evidencias/TC-18_20261120.png) |
-| Re-test | Pendiente (semana 3). |
+| Re-test | ⏸ Pospuesto (severidad Baja; tarea 6.4). |
 | Estado | Abierto |
 | Riesgo residual | Un cliente que solo revise el código HTTP creería que inició sesión. |
