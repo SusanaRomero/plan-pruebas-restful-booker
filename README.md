@@ -18,6 +18,7 @@ plan-pruebas-restful-booker/
 ├── docs/
 │   ├── plan-de-pruebas.md            ← plan completo (8 secciones) y casos manuales
 │   ├── registro-incidentes.md        ← reportes de incidentes (INC-xx)
+│   ├── informe-cierre.md             ← informe de cierre del ciclo de pruebas
 │   └── evidencias/                   ← capturas y reportes de cada ejecución
 ├── tests/
 │   └── flujos_criticos.spec.js       ← casos automatizados TC-19 a TC-23 (Playwright)
