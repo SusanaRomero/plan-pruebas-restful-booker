@@ -27,7 +27,7 @@
 | Versión | 1.5 |
 | Estado | Ciclo cerrado: ver [informe de cierre](informe-cierre.md) (pendiente de firma del auditor) |
 | Release de GitHub | `v1.0.0` |
-| Commit de referencia | `<SHA del commit del release>` *(se completa al publicar el release)* |
+| Commit de referencia | [`849a9dd`](https://github.com/SusanaRomero/plan-pruebas-restful-booker/commit/849a9dd7cfaba8b27a673b9d9b04c993dc1b394c) (contenido del release `v1.0.0`) |
 | Ubicación | `/docs/plan-de-pruebas.md` del repositorio `plan-pruebas-restful-booker` |
 
 El identificador sigue la convención `PP` (plan de pruebas) – `RB` (RESTful Booker) – año – consecutivo. Cada release de GitHub congela una versión del plan; el SHA del commit permite al auditor saber exactamente qué versión revisó.

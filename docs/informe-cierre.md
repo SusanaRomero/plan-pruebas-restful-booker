@@ -14,7 +14,7 @@
 | Autora | Susana Romero García (Analista de pruebas) |
 | Organización | Institución Universitaria Pascual Bravo – Curso de Pruebas de Software – Equipo RESTful Booker |
 | Aprobación | Roberto José Calderón (auditor) – pendiente |
-| Release de GitHub | `v1.0.0` (commit `<SHA>`, se completa al publicar) |
+| Release de GitHub | `v1.0.0` (commit [`849a9dd`](https://github.com/SusanaRomero/plan-pruebas-restful-booker/commit/849a9dd7cfaba8b27a673b9d9b04c993dc1b394c)) |
 
 ## 2. Resumen ejecutivo
 
